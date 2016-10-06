@@ -43,12 +43,18 @@
   },
   "devDependencies": {
     "ava": "^0.16.0",
+    "call-signature": "0.0.2",
     "eslint": "^3.7.1",
     "eslint-config-smartcar": "^1.0.0",
-    "nyc": "^8.3.0"
+    "nyc": "^8.3.0",
+    "zen-observable": "^0.3.0"
   },
   "eslintConfig": {
     "extends": "smartcar",
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
     "env": {
       "es6": true
     }
