@@ -262,6 +262,44 @@ test('.notDeepEqual()', t => {
   });
 });
 
+test('.keys()', t => {
+  t.notThrows(() => {
+    assert.keys({}, []);
+  });
+
+  t.notThrows(() => {
+    assert.keys({'': 2}, ['']);
+  });
+
+  t.notThrows(() => {
+    assert.keys({a: 1}, 'a');
+  });
+
+  t.notThrows(() => {
+    assert.keys({a: 1, b: 2}, ['b', 'a']);
+  });
+
+  t.notThrows(() => {
+    assert.keys({a: 1, b: {c: 2}}, ['b', 'a']);
+  });
+
+  t.throws(() => {
+    assert.keys({}, '');
+  });
+
+  t.throws(() => {
+    assert.keys({a: 1, b: 2}, ['a']);
+  });
+
+  t.throws(() => {
+    assert.keys({a: 1}, ['a', 'b']);
+  });
+
+  t.throws(() => {
+    assert.keys({}, 'a');
+  });
+});
+
 test('.throws()', t => {
   t.throws(() => { // eslint-disable-next-line no-empty-function
     assert.throws(() => {});
