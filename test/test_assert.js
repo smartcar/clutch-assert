@@ -1,8 +1,5 @@
 import test from 'ava';
-import callSignature from 'call-signature';
-
 import assert from '../lib/assert';
-import {ENHANCED, NOT_ENHANCED} from '../lib/patterns';
 
 test('.pass()', t => {
   t.notThrows(() => {
@@ -430,20 +427,4 @@ test('.deepEqual() should not mask RangeError from underlying assert', t => {
   t.notThrows(() => {
     assert.deepEqual(a, b);
   });
-});
-
-test('patterns', t => {
-  // Validates that our power-assert patterns match the API
-  function methodName(signature) {
-    var parsed = callSignature.parse(signature);
-    t.is(parsed.callee.object, 't');
-    return parsed.callee.member;
-  }
-
-  // eslint-disable-next-line max-len
-  const allPatterns = ENHANCED.map(methodName).concat(NOT_ENHANCED.map(methodName)).sort();
-
-  const allMethods = Object.keys(assert).sort();
-
-  t.deepEqual(allMethods, allPatterns);
 });
