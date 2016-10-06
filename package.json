@@ -26,5 +26,23 @@
   "bugs": {
     "url": "https://github.com/smartcar/clutch-assert/issues"
   },
-  "homepage": "https://github.com/smartcar/clutch-assert#readme"
+  "homepage": "https://github.com/smartcar/clutch-assert#readme",
+  "dependencies": {
+    "is-observable": "^0.2.0",
+    "is-promise": "^2.1.0",
+    "not-so-shallow": "^0.1.4",
+    "observable-to-promise": "^0.4.0"
+  },
+  "devDependencies": {
+    "ava": "^0.16.0",
+    "eslint": "^3.7.1",
+    "eslint-config-smartcar": "^1.0.0",
+    "nyc": "^8.3.0"
+  },
+  "eslintConfig": {
+    "extends": "smartcar",
+    "env": {
+      "es6": true
+    }
+  }
 }
