@@ -5,10 +5,10 @@ node_js:
   - stable
   - '4'
 
-# deploy:
-#   on:
-#     branch: master
-#     node: stable
-#   provider: npm
-#   email: hello@smartcar.com
-#   api_key: $NPM_API_TOKEN
+deploy:
+  on:
+    branch: master
+    node: stable
+  provider: npm
+  email: hello@smartcar.com
+  api_key: $NPM_API_TOKEN
