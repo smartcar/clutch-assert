@@ -2,10 +2,12 @@ const empower = require('empower');
 const formatter = require('power-assert-formatter');
 
 const assert = require('./lib/assert');
+const patterns = require('./lib/patterns');
 
 const empowerOptions = {
   modifyMessageOnRethrow: true,
   saveContextOnRethrow: true,
+  patterns: patterns.ENHANCED,
 };
 
 function customize(customOptions) {
