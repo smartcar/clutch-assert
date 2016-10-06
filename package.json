@@ -1,0 +1,30 @@
+{
+  "name": "clutch-assert",
+  "version": "0.0.0",
+  "description": "Combine Ava's assertion API with Power Assert",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartcar/clutch-assert.git"
+  },
+  "keywords": [
+    "ava",
+    "power-assert",
+    "assert",
+    "testing",
+    "unit",
+    "test",
+    "clutch",
+    "espower",
+    "empower"
+  ],
+  "author": "Smartcar <hello@smartcar.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smartcar/clutch-assert/issues"
+  },
+  "homepage": "https://github.com/smartcar/clutch-assert#readme"
+}
