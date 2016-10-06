@@ -3,13 +3,20 @@
   "version": "0.0.0",
   "description": "Combine Ava's assertion API with Power Assert",
   "main": "index.js",
-  "scripts": {
-    "test": "ava"
+  "license": "MIT",
+  "author": {
+    "name": "Smartcar",
+    "email": "hello@smartcar.com",
+    "url": "https://smartcar.com"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/smartcar/clutch-assert.git"
   },
+  "bugs": {
+    "url": "https://github.com/smartcar/clutch-assert/issues"
+  },
+  "homepage": "https://github.com/smartcar/clutch-assert#readme",
   "keywords": [
     "ava",
     "power-assert",
@@ -21,12 +28,13 @@
     "espower",
     "empower"
   ],
-  "author": "Smartcar <hello@smartcar.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/smartcar/clutch-assert/issues"
+  "engines": {
+    "node": ">=4.0.0"
   },
-  "homepage": "https://github.com/smartcar/clutch-assert#readme",
+  "scripts": {
+    "test": "nyc ava",
+    "lint": "eslint ."
+  },
   "dependencies": {
     "is-observable": "^0.2.0",
     "is-promise": "^2.1.0",
