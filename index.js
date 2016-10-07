@@ -1,3 +1,5 @@
+'use strict';
+
 const empower = require('empower');
 const formatter = require('power-assert-formatter');
 
