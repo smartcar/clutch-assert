@@ -1,6 +1,6 @@
 {
   "name": "clutch-assert",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Combine Ava's assertion API with Power Assert",
   "main": "index.js",
   "license": "MIT",
@@ -36,10 +36,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "empower": "^1.2.1",
     "is-observable": "^0.2.0",
     "is-promise": "^2.1.0",
     "not-so-shallow": "^0.1.4",
-    "observable-to-promise": "^0.4.0"
+    "observable-to-promise": "^0.4.0",
+    "power-assert-formatter": "^1.4.1"
   },
   "devDependencies": {
     "ava": "^0.16.0",
@@ -51,10 +53,6 @@
   },
   "eslintConfig": {
     "extends": "smartcar",
-    "parserOptions": {
-      "ecmaVersion": 2017,
-      "sourceType": "module"
-    },
     "env": {
       "es6": true
     }
