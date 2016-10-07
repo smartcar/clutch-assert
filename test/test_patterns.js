@@ -9,7 +9,7 @@ test('patterns', t => {
   // Validates that our power-assert patterns match the API
   function methodName(signature) {
     var parsed = callSignature.parse(signature);
-    t.is(parsed.callee.object, 't');
+    t.is(parsed.callee.object, 'assert');
     return parsed.callee.member;
   }
 
