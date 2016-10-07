@@ -8,20 +8,26 @@ const empowerOptions = {
   modifyMessageOnRethrow: true,
   saveContextOnRethrow: true,
   patterns: patterns.ENHANCED,
+  wrapOnlyPatterns: patterns.NOT_ENHANCED,
 };
 
-function customize(customOptions) {
-  const options = customOptions || {};
+function Clutch(options) {
+  options = options || {};
+
   const poweredAssert = empower(
     assert,
     formatter(options.output),
     Object.assign(empowerOptions, options.assertion)
   );
-  poweredAssert.customize = customize;
-  return poweredAssert;
+
+  Object.assign(this, poweredAssert);
 }
 
-const clutch = customize();
+Clutch.prototype.customize = function(options) {
+  return new Clutch(options);
+};
+
+const clutch = new Clutch();
 
 clutch.default = clutch;
 module.exports = clutch;
