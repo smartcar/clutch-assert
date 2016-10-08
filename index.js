@@ -13,23 +13,20 @@ const empowerOptions = {
   wrapOnlyPatterns: patterns.NOT_ENHANCED,
 };
 
-function Clutch(options) {
+function customize(options) {
   options = options || {};
 
-  const poweredAssert = empower(
+  const powered = empower(
     assert,
     formatter(options.output),
     Object.assign(empowerOptions, options.assertion)
   );
+  powered.customize = customize;
 
-  Object.assign(this, poweredAssert);
+  return powered;
 }
 
-Clutch.prototype.customize = function(options) {
-  return new Clutch(options);
-};
-
-const clutch = new Clutch();
+const clutch = customize();
 
 clutch.default = clutch;
 module.exports = clutch;
