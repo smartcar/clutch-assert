@@ -15,7 +15,7 @@ function methodName(signature) {
 test('default api', t => {
   const methods = Object.keys(clutch).sort();
   const allPatterns = ENHANCED.concat(NOT_ENHANCED).map(methodName)
-    .concat(['default']) // add in the default property for modules
+    .concat(['default', 'customize']) // add in the default property for modules
     .sort();
 
   t.deepEqual(methods, allPatterns);
@@ -31,9 +31,12 @@ test('customize', t => {
   const methods = Object.keys(assert).sort();
   const originalMethods = Object.keys(clutch).sort();
 
-  const simplePatterns = NOT_ENHANCED.map(methodName).sort();
+  const simplePatterns = NOT_ENHANCED.map(methodName)
+    .concat(['customize'])
+    .sort();
+
   const allPatterns = ENHANCED.concat(NOT_ENHANCED).map(methodName)
-    .concat(['default']) // add in the default property for modules
+    .concat(['default', 'customize']) // add in the default property for modules
     .sort();
 
   t.deepEqual(methods, simplePatterns);
