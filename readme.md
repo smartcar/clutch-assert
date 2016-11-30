@@ -202,4 +202,4 @@ const assert = require('clutch-assert').customize({
 [npm-image]: https://img.shields.io/npm/v/clutch-assert.svg?style=flat-square
 
 [travis-url]: https://travis-ci.org/smartcar/clutch-assert
-[travis-image]: https://img.shields.io/travis/smartcar/clutch-assert.svg?style=flat-square
+[travis-image]: https://img.shields.io/travis/smartcar/clutch-assert/master.svg?style=flat-square
