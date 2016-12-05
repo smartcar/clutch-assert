@@ -11,7 +11,7 @@ function getDirectory(rc) {
     return DEFAULT_DIRECTORY;
   }
 
-  const dir = rc.dir;
+  const dir = rc.directory;
   const last = dir.substring(dir.length - 1);
 
   // strip trailing slashes
@@ -27,13 +27,13 @@ function checkDirectory(dir) {
   dir = path.resolve(dir);
   try {
     fs.accessSync(dir, fs.constants.F_OK);
-  } catch (e) {
+  } catch (e) { // eslint-disable-next-line max-len
     e.message = `(clutch-assert/loader) Tried to instrument ${dir} but it does not exist.
-    Please specify a directory in .clutchrc as follows:
+    Please specify the correct directory in .clutchrc as follows:
     {
-      directory: "test-unit"
+      "directory": "test-unit"
     }
-    `
+    `;
     throw e;
   }
 
