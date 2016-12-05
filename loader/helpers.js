@@ -5,19 +5,17 @@ const path = require('path');
 
 const DEFAULT_DIRECTORY = 'test';
 
-function getDirectory(pkg) {
+function getDirectory(rc) {
 
-  const usePkg = typeof pkg === 'object'
-              && typeof pkg.directories === 'object'
-              && typeof pkg.directories.test === 'string';
-
-  if (!usePkg) {
+  if (!(typeof rc === 'object' && rc.directory)) {
     return DEFAULT_DIRECTORY;
   }
 
-  const dir = pkg.directories.test;
-  const lastChar = dir[dir.length - 1];
-  if (lastChar === '/' || lastChar === '\\') {
+  const dir = rc.dir;
+  const last = dir.substring(dir.length - 1);
+
+  // strip trailing slashes
+  if (last === '/' || last === '\\') {
     return dir.substring(0, dir.length - 1);
   }
 
@@ -30,13 +28,19 @@ function checkDirectory(dir) {
   try {
     fs.accessSync(dir, fs.constants.F_OK);
   } catch (e) {
-    // TODO: determine what should happen if directory is not found
+    e.message = `(clutch-assert/loader) Tried to instrument ${dir} but it does not exist.
+    Please specify a directory in .clutchrc as follows:
+    {
+      directory: "test-unit"
+    }
+    `
+    throw e;
   }
 
 }
 
 function createPattern(dir) {
-  return dir + '**' + path.sep + '*.js';
+  return dir + path.sep + '**' + path.sep + '*.js';
 }
 
 module.exports = {getDirectory, checkDirectory, createPattern};

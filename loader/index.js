@@ -7,14 +7,14 @@ const patterns = require('../lib/patterns');
 
 const parent = path.dirname(module.parent.paths[0]);
 
-var pkg;
+var rc;
 try { // eslint-disable-next-line global-require
-  pkg = require(parent + path.sep + 'package.json');
+  rc = require(parent + path.sep + '.clutchrc');
 } catch (e) {
-  // no package.json found
+  // no clutchrc found
 }
 
-const dir = helpers.getDirectory(pkg);
+const dir = helpers.getDirectory(rc);
 helpers.checkDirectory(dir);
 const pattern = helpers.createPattern(dir);
 
