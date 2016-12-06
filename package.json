@@ -33,6 +33,7 @@
   },
   "scripts": {
     "test": "ava",
+    "posttest": "npm run lint -s",
     "lint": "eslint . --cache",
     "cover": "nyc npm test -s"
   },
@@ -51,8 +52,5 @@
     "eslint-config-smartcar": "^2.0.0",
     "nyc": "^10.0.0",
     "zen-observable": "^0.3.0"
-  },
-  "eslintConfig": {
-    "extends": "smartcar"
   }
 }
