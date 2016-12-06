@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const path = require('path');
 const helpers = require('./helpers');
 const espower = require('espower-loader');
@@ -8,10 +9,16 @@ const patterns = require('../lib/patterns');
 const parent = path.dirname(module.parent.paths[0]);
 
 var rc;
-try { // eslint-disable-next-line global-require
-  rc = require(parent + path.sep + '.clutchrc');
+try {
+  rc = JSON.parse(fs.readFileSync(parent + path.sep + '.clutchrc'));
 } catch (e) {
+
+  if (e.code !== 'ENOENT') {
+    throw e;
+  }
+
   // no clutchrc found
+
 }
 
 const dir = helpers.getDirectory(rc);
