@@ -1,4 +1,5 @@
-# Clutch Assert [![Build Status][ci-image]][ci-url] [![NPM package][npm-image]][npm-url]
+# Clutch Assert [![NPM package][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Coverage][coverage-image]][coverage-url]
+
 > "The only assert library that truly comes in clutch"
 
 ## What is this?!
@@ -196,3 +197,6 @@ const assert = require('clutch-assert').customize({
 
 [ci-url]: https://travis-ci.org/smartcar/clutch-assert
 [ci-image]: https://img.shields.io/travis/smartcar/clutch-assert/master.svg?style=flat-square
+
+[coverage-url]: https://codecov.io/gh/smartcar/clutch-assert
+[coverage-image]: https://img.shields.io/codecov/c/github/smartcar/clutch-assert/master.svg?style=flat-square
