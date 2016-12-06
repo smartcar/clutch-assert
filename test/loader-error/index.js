@@ -5,17 +5,16 @@
 const test = require('ava');
 
 test.afterEach(function() {
+
   delete require.cache[require.resolve('../../loader')];
 });
 
-test('overall', function(t) {
-
-  require('../../loader');
+test('does not swallow errors', function(t) {
 
   const err = t.throws(function() {
-    require('../fixtures/to_be_instrumented');
-  });
+    require('../../loader');
+  }, SyntaxError);
 
-  t.is(err.message, "Cannot find module 'power-assert'");
 
+  t.true(err.message.includes('Unexpected token g'));
 });
