@@ -33,7 +33,7 @@
   },
   "scripts": {
     "test": "ava",
-    "lint": "eslint .",
+    "lint": "eslint . --cache",
     "cover": "nyc npm test -s"
   },
   "dependencies": {
