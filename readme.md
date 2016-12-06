@@ -14,7 +14,7 @@ provides a handy [`.keys`] assertion which can be useful if switching from chai.
 ## Why/When should I use this?
 
 The library can be very helpful when porting an older codebase to use ava for
-testing. Using clutch assert will allow you to incrementaly convert all of your
+testing. Using clutch assert will allow you to incrementally convert all of your
 assertions to ava style assertions and then once you're ready to switch just
 replace the word assert with ava's assertion mixin variable.
 
@@ -136,19 +136,19 @@ const assert = require('clutch-assert').customize({
 
 #### options.assertion
 
-customization options for [empower](https://github.com/power-assert-js/empower) module.
+Customization options for [empower](https://github.com/power-assert-js/empower) module.
  See [empower API documentation](https://github.com/power-assert-js/empower#api) for details.
 Note that some default values are different from `empower`'s
 (`modifyMessageOnRethrow: true` and `saveContextOnRethrow: true`).
 
 #### options.output
 
-customization options for [power-assert-formatter](https://github.com/power-assert-js/power-assert-formatter) module.
+Customization options for [power-assert-formatter](https://github.com/power-assert-js/power-assert-formatter) module.
 See [power-assert-formatter API documentation](https://github.com/power-assert-js/power-assert-formatter#api) for details.
 
 #### default values
 
-customizable properties and their default values are as follows.
+Customizable properties and their default values are as follows.
 
 ```js
 const assert = require('clutch-assert').customize({
@@ -157,24 +157,17 @@ const assert = require('clutch-assert').customize({
     modifyMessageOnRethrow: true,
     saveContextOnRethrow: true,
     patterns: [
-      't.truthy(value, [message])',
-      't.falsy(value, [message])',
-      't.true(value, [message])',
-      't.false(value, [message])',
-      't.is(value, expected, [message])',
-      't.not(value, expected, [message])',
-      't.deepEqual(value, expected, [message])',
-      't.notDeepEqual(value, expected, [message])',
-      't.regex(contents, regex, [message])',
-      't.notRegex(contents, regex, [message])',
-      't.keys(object, keys, [message])',
-    ],
-    wrapOnlyPatterns: [
-      't.pass([message])',
-      't.fail([message])',
-      't.throws(fn, [message])',
-      't.notThrows(fn, [message])',
-      't.ifError(error, [message])',
+      'assert.truthy(value, [message])',
+      'assert.falsy(value, [message])',
+      'assert.true(value, [message])',
+      'assert.false(value, [message])',
+      'assert.is(value, expected, [message])',
+      'assert.not(value, expected, [message])',
+      'assert.deepEqual(value, expected, [message])',
+      'assert.notDeepEqual(value, expected, [message])',
+      'assert.regex(contents, regex, [message])',
+      'assert.notRegex(contents, regex, [message])',
+      'assert.keys(object, keys, [message])',
     ],
   },
   output: {
@@ -184,10 +177,10 @@ const assert = require('clutch-assert').customize({
     circular: '#@Circular#',
     lineSeparator: '\n',
     ambiguousEastAsianCharWidth: 2,
-    widthOf: (Function to calculate width of string. Please see power-assert-formatter's documentation)
-    stringify: (Function to stringify any target value. Please see power-assert-formatter's documentation)
-    diff: (Function to create diff string between two strings. Please see power-assert-formatter's documentation)
-    writerClass: (Constructor Function for output writer class. Please see power-assert-formatter's documentation)
+    widthOf: "(Function to calculate width of string. Please see power-assert-formatter's documentation)"
+    stringify: "(Function to stringify any target value. Please see power-assert-formatter's documentation)"
+    diff: "(Function to create diff string between two strings. Please see power-assert-formatter's documentation)"
+    writerClass: "(Constructor Function for output writer class. Please see power-assert-formatter's documentation)"
     renderers: [
       './built-in/file',
       './built-in/assertion',
