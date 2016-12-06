@@ -26,7 +26,7 @@ function checkDirectory(dir) {
 
   dir = path.resolve(dir);
   try {
-    fs.accessSync(dir, fs.constants.F_OK);
+    fs.accessSync(dir);
   } catch (e) { // eslint-disable-next-line max-len
     e.message = `(clutch-assert/loader) Tried to instrument ${dir} but it does not exist.
     Please specify the correct directory in .clutchrc as follows:
