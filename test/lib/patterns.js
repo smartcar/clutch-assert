@@ -1,10 +1,11 @@
-import test from 'ava';
-import callSignature from 'call-signature';
+'use strict';
 
-import assert from '../../lib/assert';
-import {ENHANCED, NOT_ENHANCED} from '../../lib/patterns';
+const test = require('ava');
+const assert = require('../../lib/assert');
+const callSignature = require('call-signature');
+const {ENHANCED, NOT_ENHANCED} = require('../../lib/patterns');
 
-test('patterns', t => {
+test('patterns', function(t) {
 
   // Validates that our power-assert patterns match the API
   function methodName(signature) {

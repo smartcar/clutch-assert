@@ -1,8 +1,9 @@
-import test from 'ava';
-import callSignature from 'call-signature';
+'use strict';
 
-import clutch from '../index';
-import {ENHANCED, NOT_ENHANCED} from '../lib/patterns';
+const test = require('ava');
+const clutch = require('../index');
+const callSignature = require('call-signature');
+const {ENHANCED, NOT_ENHANCED} = require('../lib/patterns');
 
 /**
  * Helper method for getting function name from patterns
@@ -12,7 +13,7 @@ function methodName(signature) {
   return callSignature.parse(signature).callee.member;
 }
 
-test('default api', t => {
+test('default api', function(t) {
   const methods = Object.keys(clutch).sort();
   const allPatterns = ENHANCED.concat(NOT_ENHANCED).map(methodName)
     .concat(['default', 'customize']) // add in the default property for modules
@@ -21,7 +22,7 @@ test('default api', t => {
   t.deepEqual(methods, allPatterns);
 });
 
-test('customize', t => {
+test('customize', function(t) {
   const assert = clutch.customize({
     assertion: {
       patterns: [],
