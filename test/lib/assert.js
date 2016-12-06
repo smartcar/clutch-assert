@@ -1,5 +1,5 @@
 import test from 'ava';
-import assert from '../lib/assert';
+import assert from '../../lib/assert';
 
 test('.pass()', t => {
   t.notThrows(() => {

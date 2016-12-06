@@ -1,7 +1,7 @@
 import test from 'ava';
 import Observable from 'zen-observable';
 
-import assert from '../lib/assert';
+import assert from '../../lib/assert';
 
 // Must export Promise to support Observables on 0.10
 global.Promise = Promise;

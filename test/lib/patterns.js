@@ -1,8 +1,8 @@
 import test from 'ava';
 import callSignature from 'call-signature';
 
-import assert from '../lib/assert';
-import {ENHANCED, NOT_ENHANCED} from '../lib/patterns';
+import assert from '../../lib/assert';
+import {ENHANCED, NOT_ENHANCED} from '../../lib/patterns';
 
 test('patterns', t => {
 
