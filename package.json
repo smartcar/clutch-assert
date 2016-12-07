@@ -1,6 +1,6 @@
 {
   "name": "clutch-assert",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Combine Ava's assertion API with Power Assert",
   "main": "index.js",
   "license": "MIT",
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "empower": "^1.2.1",
+    "espower-loader": "^1.2.0",
     "is-observable": "^0.2.0",
     "is-promise": "^2.1.0",
     "not-so-shallow": "^0.1.4",

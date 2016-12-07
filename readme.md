@@ -7,10 +7,10 @@
 
 This project is essentially a combination of ideas from two other projects
 [ava](https://github.com/avajs/ava) and
-[power-assert](github.com/power-assert-js/power-assert).
+[power-assert](http://github.com/power-assert-js/power-assert).
 
 It combines the api of ava's assertions with the power of power-assert and also
-provides a handy [`.keys`] assertion which can be useful if switching from chai.
+provides a handy `.keys` assertion which can be useful if switching from chai.
 
 ## Why/When should I use this?
 
@@ -19,22 +19,26 @@ testing. Using clutch assert will allow you to incrementally convert all of your
 assertions to ava style assertions and then once you're ready to switch just
 replace the word assert with ava's assertion mixin variable.
 
+**Note:** ava does not have the `.keys` assertion 
+
 ## Quick Start
 
-Install clutch-assert and intelli-espower-loader
-
+Install clutch-assert
 ```
-$ npm install --save clutch-assert intelli-espower-loader
+$ npm install --save clutch-assert
 ```
 
-Instruct your test runner to require intelli-espower-loader before running tests
+Instruct your test runner to require the clutch-assert loader before running tests.
+**You will not get enhanced assertion messages if you neglect to require the loader**
 
 Example using [mocha](https://visionmedia.github.io/mocha/)
 ```
-$(npm bin)/mocha --require intelli-espower-loader path/to/test/mocha_node.js
+$(npm bin)/mocha --require clutch-assert/loader path/to/test/mocha_node.js
 ```
-For more detailed instructions and use cases please refer to the
-[power-assert documentation](https://github.com/power-assert-js/power-assert)
+
+By default the loader will instrument all files in a directory named `test`, if 
+your tests are located elsewhere you must provide that path to the loader as 
+detailed under [loader configuration](https://github.com/smartcar/clutch-assert/#loader-configuration).
 
 ## Usage
 
@@ -47,6 +51,38 @@ assert.is(1 + 1, 2);
 **Note:** Make sure to name the variable assert, due to the way the underlying
 dependencies work power-assert won't work correctly if the variable is named
 something else.
+
+### Loader Configuration
+By default the loader instruments all files under the `test` directory, this can be changed
+by placing a `.clutchrc` in the root of your project which should be a json file with a `directory`
+top-level key.
+
+*Example*
+```json
+{
+  "directory": "test/unit"
+}
+```
+
+### Using Other Loaders
+The [power-assert loaders](https://github.com/power-assert-js/power-assert#be-sure-to-transform-test-code)
+do not have support for the `.keys` assertion by default. If you wish to use 
+that assertion you must import the patterns from clutch assert and configure
+the loader to use those patterns.
+
+Here is an example using `espower-loader`
+```js
+const espower = require('espower-loader');
+const patterns = require('clutch-assert/lib/patterns');
+
+espower({
+  cwd: process.cwd(),
+  pattern: 'test/**/*.js',
+  espowerOptions: {
+    patterns: pattern.ENHANCED,
+  },
+});
+```
 
 ## API
 
