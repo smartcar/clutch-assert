@@ -4,7 +4,7 @@ const test = require('ava');
 const {sep} = require('path');
 const helpers = require('../../loader/helpers');
 
-test('getDirectory', t => {
+test('getDirectory', function(t) {
 
   t.is(helpers.getDirectory(), 'test');
   t.is(helpers.getDirectory(), 'test');
