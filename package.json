@@ -43,7 +43,7 @@
     "is-observable": "^0.2.0",
     "is-promise": "^2.1.0",
     "not-so-shallow": "^0.1.4",
-    "observable-to-promise": "^0.4.0",
+    "observable-to-promise": "^0.5.0",
     "power-assert-formatter": "^1.4.1"
   },
   "devDependencies": {
