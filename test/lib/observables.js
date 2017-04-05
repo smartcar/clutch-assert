@@ -10,12 +10,12 @@ function throwingObservable() {
   });
 }
 
-test('.throws()', function(t) {
-  t.notThrows(assert.throws(throwingObservable()));
-  t.throws(assert.throws(Observable.of(1, 2, 3)));
+test('.throws()', async function(t) {
+  await t.notThrows(assert.throws(throwingObservable()));
+  await t.throws(assert.throws(Observable.of(1, 2, 3)));
 });
 
-test('.notThrows()', function(t) {
-  t.notThrows(assert.notThrows(Observable.of(1, 2, 3)));
-  t.throws(assert.notThrows(throwingObservable()));
+test('.notThrows()', async function(t) {
+  await t.notThrows(assert.notThrows(Observable.of(1, 2, 3)));
+  await t.throws(assert.notThrows(throwingObservable()));
 });
