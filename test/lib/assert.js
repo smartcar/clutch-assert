@@ -311,16 +311,14 @@ test('.throws()', function(t) {
   });
 });
 
-test('.throws() - Promises', function(t) {
-  t.notThrows(assert.throws(Promise.reject(new Error('foo'))));
-
-  t.throws(assert.throws(Promise.resolve()));
+test('.throws() - Promises', async function(t) {
+  await t.notThrows(assert.throws(Promise.reject(new Error('foo'))));
+  await t.throws(assert.throws(Promise.resolve()));
 });
 
-test('.notThrows() - Promises', function(t) {
-  t.notThrows(assert.notThrows(Promise.resolve()));
-
-  t.throws(assert.notThrows(Promise.reject(new Error('foo'))));
+test('.notThrows() - Promises', async function(t) {
+  await t.notThrows(assert.notThrows(Promise.resolve()));
+  await t.throws(assert.notThrows(Promise.reject(new Error('foo'))));
 });
 
 test('.throws() returns the thrown error', function(t) {
@@ -340,7 +338,7 @@ test('.throws() returns the rejection reason of promise', async function(t) {
   t.is(actual, expected);
 });
 
-test('.throws(fn, str) checks that error.message === str', function(t) {
+test('.throws(fn, str) checks that error.message === str', async function(t) {
   const throwFoo = function() {
     throw new Error('foo');
   };
@@ -350,8 +348,8 @@ test('.throws(fn, str) checks that error.message === str', function(t) {
   t.notThrows(function() { assert.throws(throwFoo, 'foo'); });
   t.throws(function() { assert.throws(throwFoo, 'bar'); });
 
-  t.notThrows(assert.throws(rejectFoo, 'foo'));
-  t.throws(assert.throws(rejectFoo, 'bar'));
+  await t.notThrows(assert.throws(rejectFoo, 'foo'));
+  await t.throws(assert.throws(rejectFoo, 'bar'));
 });
 
 test('.throws should throw if passed a bad value', function(t) {
