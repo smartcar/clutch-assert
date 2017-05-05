@@ -10,6 +10,12 @@ const sinon = require('sinon');
 const mockery = require('mockery');
 const helpers = require('../../loader/helpers');
 
+// eslint-disable-next-line no-process-env
+if (process.env.NYC_CONFIG) {
+  // silence mockery when running coverage
+  mockery.warnOnUnregistered(false);
+}
+
 /**
  * Creates a temporary directory and writes a .clutchrc file in that directory
  *
@@ -109,7 +115,7 @@ test.serial('invalid rc file', async function(t) {
 
   const err = t.throws(() => require('../../loader'), SyntaxError);
 
-  t.regex(err.message, /Unexpected token \w in JSON at position \d+/);
+  t.regex(err.message, /^Unexpected token \w+( in JSON at position \d+)?$/);
 
 });
 
