@@ -51,7 +51,9 @@
     "call-signature": "0.0.2",
     "eslint": "^3.7.1",
     "eslint-config-smartcar": "^2.0.0",
+    "mockery": "^2.0.0",
     "nyc": "^10.0.0",
+    "sinon": "^2.2.0",
     "zen-observable": "^0.5.0"
   }
 }
