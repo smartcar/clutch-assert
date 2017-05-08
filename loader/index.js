@@ -6,7 +6,7 @@ const helpers = require('./helpers');
 const espower = require('espower-loader');
 const patterns = require('../lib/patterns');
 
-const parent = path.dirname(module.parent.paths[0]);
+const parent = helpers.findParent(module.paths);
 
 var rc;
 try {
