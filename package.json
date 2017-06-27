@@ -35,7 +35,8 @@
     "test": "ava",
     "posttest": "npm run lint -s",
     "lint": "eslint . --cache",
-    "cover": "nyc npm test -s"
+    "cover": "nyc npm test -s",
+    "release": "standard-version"
   },
   "dependencies": {
     "empower": "^1.2.1",
@@ -54,6 +55,7 @@
     "mockery": "^2.0.0",
     "nyc": "^11.0.1",
     "sinon": "^2.2.0",
+    "standard-version": "^4.2.0",
     "zen-observable": "^0.5.0"
   }
 }
