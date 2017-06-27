@@ -1,6 +1,6 @@
 {
   "name": "clutch-assert",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Combine Ava's assertion API with Power Assert",
   "main": "index.js",
   "license": "MIT",
