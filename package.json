@@ -48,7 +48,7 @@
     "power-assert-formatter": "^1.4.1"
   },
   "devDependencies": {
-    "ava": "^0.21.0",
+    "ava": "^0.22.0",
     "call-signature": "0.0.2",
     "eslint": "^4.1.0",
     "eslint-config-smartcar": "^2.0.0",
