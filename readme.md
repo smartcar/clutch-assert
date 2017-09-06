@@ -31,7 +31,7 @@ $ npm install --save clutch-assert
 Instruct your test runner to require the clutch-assert loader before running tests.
 **You will not get enhanced assertion messages if you neglect to require the loader**
 
-Example using [mocha](https://visionmedia.github.io/mocha/)
+Example using [mocha](https://mochajs.org/)
 ```
 $(npm bin)/mocha --require clutch-assert/loader path/to/test/mocha_node.js
 ```
