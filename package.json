@@ -48,14 +48,14 @@
     "power-assert-formatter": "^1.4.1"
   },
   "devDependencies": {
-    "ava": "^0.19.0",
+    "ava": "^0.22.0",
     "call-signature": "0.0.2",
     "eslint": "^4.1.0",
     "eslint-config-smartcar": "^2.0.0",
     "mockery": "^2.0.0",
     "nyc": "^11.0.1",
-    "sinon": "^2.2.0",
+    "sinon": "^4.0.1",
     "standard-version": "^4.2.0",
-    "zen-observable": "^0.5.0"
+    "zen-observable": "^0.6.0"
   }
 }
