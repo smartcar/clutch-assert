@@ -1,4 +1,4 @@
-# Clutch Assert [![NPM package][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Coverage][coverage-image]][coverage-url]
+# Clutch Assert [![NPM package][npm-image]][npm-url] [![Build Status][ci-image]][ci-url] [![Coverage][coverage-image]][coverage-url] [![Greenkeeper][gk-image]][gk-url]
 
 > "The only assert library that truly comes in clutch"
 
@@ -19,7 +19,7 @@ testing. Using clutch assert will allow you to incrementally convert all of your
 assertions to ava style assertions and then once you're ready to switch just
 replace the word assert with ava's assertion mixin variable.
 
-**Note:** ava does not have the `.keys` assertion 
+**Note:** ava does not have the `.keys` assertion
 
 ## Quick Start
 
@@ -36,8 +36,8 @@ Example using [mocha](https://visionmedia.github.io/mocha/)
 $(npm bin)/mocha --require clutch-assert/loader path/to/test/mocha_node.js
 ```
 
-By default the loader will instrument all files in a directory named `test`, if 
-your tests are located elsewhere you must provide that path to the loader as 
+By default the loader will instrument all files in a directory named `test`, if
+your tests are located elsewhere you must provide that path to the loader as
 detailed under [loader configuration](https://github.com/smartcar/clutch-assert/#loader-configuration).
 
 ## Usage
@@ -66,7 +66,7 @@ top-level key.
 
 ### Using Other Loaders
 The [power-assert loaders](https://github.com/power-assert-js/power-assert#be-sure-to-transform-test-code)
-do not have support for the `.keys` assertion by default. If you wish to use 
+do not have support for the `.keys` assertion by default. If you wish to use
 that assertion you must import the patterns from clutch assert and configure
 the loader to use those patterns.
 
@@ -236,3 +236,6 @@ const assert = require('clutch-assert').customize({
 
 [coverage-url]: https://codecov.io/gh/smartcar/clutch-assert
 [coverage-image]: https://img.shields.io/codecov/c/github/smartcar/clutch-assert/master.svg?style=flat-square
+
+[gk-url]: https://greenkeeper.io
+[gk-image]: https://badges.greenkeeper.io/smartcar/clutch-assert.svg
