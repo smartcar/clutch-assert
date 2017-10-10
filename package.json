@@ -1,6 +1,6 @@
 {
   "name": "clutch-assert",
-  "version": "0.2.0",
+  "version": "0.0.0-semantic-release",
   "description": "Combine Ava's assertion API with Power Assert",
   "main": "index.js",
   "license": "MIT",
@@ -36,7 +36,7 @@
     "posttest": "npm run lint -s",
     "lint": "eslint . --cache",
     "cover": "nyc npm test -s",
-    "release": "standard-version"
+    "release": "semantic-release pre && npm publish && semantic-release post"
   },
   "dependencies": {
     "empower": "^1.2.1",
@@ -54,8 +54,8 @@
     "eslint-config-smartcar": "^2.0.0",
     "mockery": "^2.0.0",
     "nyc": "^11.0.1",
+    "semantic-release": "^8.0.3",
     "sinon": "^4.0.1",
-    "standard-version": "^4.2.0",
     "zen-observable": "^0.6.0"
   }
 }
