@@ -56,6 +56,6 @@
     "nyc": "^11.0.1",
     "semantic-release": "^8.0.3",
     "sinon": "^4.0.1",
-    "zen-observable": "^0.6.0"
+    "zen-observable": "^0.7.0"
   }
 }
