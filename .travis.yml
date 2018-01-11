@@ -17,7 +17,8 @@ cache:
     - .eslintcache
 
 install:
-  - npm update
+  # --save-dev flag needed b/c of https://github.com/npm/npm/issues/16901
+  - npm update --save-dev
   - npm prune
 
 script:
