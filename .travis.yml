@@ -17,8 +17,8 @@ cache:
     - .eslintcache
 
 install:
-  # --save-dev flag needed b/c of https://github.com/npm/npm/issues/16901
-  - npm update --save-dev
+  # --save flag needed b/c of https://github.com/npm/npm/issues/16901
+  - npm update --save false
   - npm prune
 
 script:
@@ -32,5 +32,4 @@ jobs:
   include:
     - stage: publish
       node_js: 8
-      install: npm install
       script: npm run release
