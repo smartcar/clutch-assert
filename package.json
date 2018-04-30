@@ -55,7 +55,7 @@
     "mockery": "^2.0.0",
     "nyc": "^11.0.1",
     "semantic-release": "^15.0.0",
-    "sinon": "^4.0.1",
+    "sinon": "^5.0.1",
     "zen-observable": "^0.8.0"
   }
 }
