@@ -50,7 +50,7 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "call-signature": "0.0.2",
-    "eslint": "^4.1.0",
+    "eslint": "^5.0.0",
     "eslint-config-smartcar": "^2.0.0",
     "mockery": "^2.0.0",
     "nyc": "^11.0.1",
