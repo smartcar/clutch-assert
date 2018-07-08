@@ -54,7 +54,7 @@
     "eslint-config-smartcar": "^2.0.0",
     "greenkeeper-lockfile": "^1.15.1",
     "mockery": "^2.0.0",
-    "nyc": "^11.0.1",
+    "nyc": "^12.0.2",
     "semantic-release": "^15.0.0",
     "sinon": "^6.1.3",
     "zen-observable": "^0.8.0"
