@@ -51,7 +51,7 @@
     "ava": "^0.25.0",
     "call-signature": "0.0.2",
     "eslint": "^5.0.1",
-    "eslint-config-smartcar": "^2.0.0",
+    "eslint-config-smartcar": "^3.0.0",
     "greenkeeper-lockfile": "^1.15.1",
     "mockery": "^2.0.0",
     "nyc": "^12.0.2",
