@@ -231,11 +231,11 @@ const assert = require('clutch-assert').customize({
 [npm-url]: https://www.npmjs.com/package/clutch-assert
 [npm-image]: https://img.shields.io/npm/v/clutch-assert.svg?style=flat-square
 
-[ci-url]: https://travis-ci.org/smartcar/clutch-assert
-[ci-image]: https://img.shields.io/travis/smartcar/clutch-assert/master.svg?style=flat-square
+[ci-url]: https://travis-ci.com/smartcar/clutch-assert
+[ci-image]: https://img.shields.io/travis/com/smartcar/clutch-assert/master.svg?style=flat-square
 
 [coverage-url]: https://codecov.io/gh/smartcar/clutch-assert
 [coverage-image]: https://img.shields.io/codecov/c/github/smartcar/clutch-assert/master.svg?style=flat-square
 
 [gk-url]: https://greenkeeper.io
-[gk-image]: https://badges.greenkeeper.io/smartcar/clutch-assert.svg
+[gk-image]: https://badges.greenkeeper.io/smartcar/clutch-assert.svg?style=flat-square
