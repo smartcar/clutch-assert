@@ -312,13 +312,13 @@ test('.throws()', function(t) {
 });
 
 test('.throws() - Promises', async function(t) {
-  await t.notThrows(assert.throws(Promise.reject(new Error('foo'))));
-  await t.throws(assert.throws(Promise.resolve()));
+  await t.notThrowsAsync(assert.throws(Promise.reject(new Error('foo'))));
+  await t.throwsAsync(assert.throws(Promise.resolve()));
 });
 
 test('.notThrows() - Promises', async function(t) {
-  await t.notThrows(assert.notThrows(Promise.resolve()));
-  await t.throws(assert.notThrows(Promise.reject(new Error('foo'))));
+  await t.notThrowsAsync(assert.notThrows(Promise.resolve()));
+  await t.throwsAsync(assert.notThrows(Promise.reject(new Error('foo'))));
 });
 
 test('.throws() returns the thrown error', function(t) {
@@ -348,8 +348,8 @@ test('.throws(fn, str) checks that error.message === str', async function(t) {
   t.notThrows(function() { assert.throws(throwFoo, 'foo'); });
   t.throws(function() { assert.throws(throwFoo, 'bar'); });
 
-  await t.notThrows(assert.throws(rejectFoo, 'foo'));
-  await t.throws(assert.throws(rejectFoo, 'bar'));
+  await t.notThrowsAsync(assert.throws(rejectFoo, 'foo'));
+  await t.throwsAsync(assert.throws(rejectFoo, 'bar'));
 });
 
 test('.throws should throw if passed a bad value', function(t) {

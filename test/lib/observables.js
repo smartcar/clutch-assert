@@ -11,11 +11,11 @@ function throwingObservable() {
 }
 
 test('.throws()', async function(t) {
-  await t.notThrows(assert.throws(throwingObservable()));
-  await t.throws(assert.throws(Observable.of(1, 2, 3)));
+  await t.notThrowsAsync(assert.throws(throwingObservable()));
+  await t.throwsAsync(assert.throws(Observable.of(1, 2, 3)));
 });
 
 test('.notThrows()', async function(t) {
-  await t.notThrows(assert.notThrows(Observable.of(1, 2, 3)));
-  await t.throws(assert.notThrows(throwingObservable()));
+  await t.notThrowsAsync(assert.notThrows(Observable.of(1, 2, 3)));
+  await t.throwsAsync(assert.notThrows(throwingObservable()));
 });
