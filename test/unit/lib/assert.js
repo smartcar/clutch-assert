@@ -358,7 +358,7 @@ test('.throws should throw if passed a bad value', function(t) {
   });
 
   t.is(err.name, 'TypeError'); // eslint-disable-next-line max-len
-  t.regex(err.message, /t\.throws must be called with a function, Promise, or Observable/);
+  t.regex(err.message, /t\.throws must be called with a function, or Promise/);
 });
 
 test('.notThrows should throw if passed a bad value', function(t) {
@@ -367,7 +367,7 @@ test('.notThrows should throw if passed a bad value', function(t) {
   });
 
   t.is(err.name, 'TypeError'); // eslint-disable-next-line max-len
-  t.regex(err.message, /t\.notThrows must be called with a function, Promise, or Observable/);
+  t.regex(err.message, /t\.notThrows must be called with a function, or Promise/);
 });
 
 test('.notThrows()', function(t) {
