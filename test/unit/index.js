@@ -1,9 +1,9 @@
 'use strict';
 
 const test = require('ava');
-const clutch = require('../index');
+const clutch = require('../../index');
 const callSignature = require('call-signature');
-const {ENHANCED, NOT_ENHANCED} = require('../lib/patterns');
+const {ENHANCED, NOT_ENHANCED} = require('../../lib/patterns');
 
 /**
  * Helper method for getting function name from patterns

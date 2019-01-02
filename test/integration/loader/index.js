@@ -8,7 +8,7 @@ const test = require('ava');
 const path = require('path');
 const sinon = require('sinon');
 const mockery = require('mockery');
-const helpers = require('../../loader/helpers');
+const helpers = require('../../../loader/helpers');
 
 // eslint-disable-next-line no-process-env
 if (process.env.NYC_CONFIG) {
@@ -73,7 +73,7 @@ test.serial('no rc file', function(t) {
     ENHANCED: 'MOCK',
   });
 
-  require('../../loader');
+  require('../../../loader');
 
   t.true(t.context.stub.called);
 
@@ -95,7 +95,7 @@ test.serial('valid rc file', async function(t) {
 
   mockery.registerMock('./helpers', mock);
 
-  require('../../loader');
+  require('../../../loader');
 
   t.true(t.context.stub.called);
 
@@ -113,7 +113,7 @@ test.serial('invalid rc file', async function(t) {
     findParent: () => path,
   });
 
-  const err = t.throws(() => require('../../loader'), SyntaxError);
+  const err = t.throws(() => require('../../../loader'), SyntaxError);
 
   t.regex(err.message, /^Unexpected token \w+( in JSON at position \d+)?$/);
 
@@ -132,11 +132,11 @@ test.serial('integration', async function(t) {
 
   mockery.registerMock('./helpers', mock);
 
-  require('../../loader');
+  require('../../../loader');
 
 
   const err = t.throws(function() {
-    require('../fixtures/to_be_instrumented');
+    require('../../fixtures/to_be_instrumented');
   });
 
   t.is(err.message, "Cannot find module 'power-assert'");

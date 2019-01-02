@@ -1,7 +1,7 @@
 'use strict';
 
 const test = require('ava');
-const assert = require('../../lib/assert');
+const assert = require('../../../lib/assert');
 
 test('.pass()', function(t) {
   t.notThrows(function() {
