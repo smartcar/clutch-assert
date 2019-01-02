@@ -299,87 +299,369 @@ test('.keys()', function(t) {
   });
 });
 
-test('.throws()', function(t) {
-  t.throws(function() { // eslint-disable-next-line no-empty-function
-    assert.throws(function() {});
+test('.throws - error - non function arguments', function(t) {
+  t.throws(() => assert.throws(null), {
+    message: /^`assert.throws\(\)` must be called with a function/,
   });
 
-  t.notThrows(function() {
-    assert.throws(function() {
-      throw new Error('foo');
-    });
+  t.throws(() => assert.throws(Promise.resolve()), {
+    message: /^`assert.throws\(\)` must be called with a function/,
   });
 });
 
-test('.throws() - Promises', async function(t) {
-  await t.notThrowsAsync(assert.throws(Promise.reject(new Error('foo'))));
-  await t.throwsAsync(assert.throws(Promise.resolve()));
+test('.throws - error - invalid assertion', function(t) {
+  const assertion = {pizza: 'not a valid key'};
+  t.throws(() => assert.throws(() => 'hi', assertion), {
+    message: /^The second argument to `assert.throws\(\)` contains unexpected/,
+  });
 });
 
-test('.notThrows() - Promises', async function(t) {
-  await t.notThrowsAsync(assert.notThrows(Promise.resolve()));
-  await t.throwsAsync(assert.notThrows(Promise.reject(new Error('foo'))));
+test('.throws - error - asynchronous resolution', function(t) {
+  const resolver = () => Promise.resolve();
+
+  t.throws(() => assert.throws(resolver), {
+    message: /Function returned a promise, use `assert.throwsAsync\(\)` instead/,
+  });
 });
 
-test('.throws() returns the thrown error', function(t) {
+test('.throws - error - asynchronous rejection', function(t) {
+  const rejecter = () => Promise.reject(new Error('typos!'));
+  t.throws(() => assert.throws(rejecter), {
+    message: /Function returned a promise, use `assert.throwsAsync\(\)` instead/,
+  });
+});
+
+test('.throws - error - no error thrown - default message', function(t) {
+  t.throws(() => assert.throws(() => 'hello there'), {
+    message: /^Missing expected exception[^]*Function returned/,
+  });
+});
+
+test('.throws - error - no error thrown - custom message', function(t) {
+  t.throws(
+    () => assert.throws(() => 'hello there', null, 'this is my custom message'),
+    {
+      message: /^this is my custom message[^]*Function returned/,
+    }
+  );
+});
+
+test('.throws - error - string message does not match', function(t) {
+  const expected = new Error('message');
+  t.throws(
+    () => {
+      assert.throws(() => {
+        throw expected;
+      }, 'this does not match');
+    },
+    {
+      message: /Function threw unexpected[^]*Expected message to equal/,
+    }
+  );
+});
+
+test('.throws - error - class does not match', function(t) {
+  const expected = new SyntaxError('message');
+  t.throws(
+    () => {
+      assert.throws(() => {
+        throw expected;
+      }, TypeError);
+    },
+    {
+      message: /Function threw unexpected[^]*Expected instance of/,
+    }
+  );
+});
+
+test('.throws - success - no assertions', function(t) {
   const expected = new Error();
-  const actual = assert.throws(function() {
+  const actual = assert.throws(() => {
     throw expected;
   });
-
   t.is(actual, expected);
 });
 
-test('.throws() returns the rejection reason of promise', async function(t) {
-  const expected = new Error();
-
-  const actual = await assert.throws(Promise.reject(expected));
-
+test('.throws - success - message string assertion', function(t) {
+  const expected = new Error('message');
+  const actual = assert.throws(() => {
+    throw expected;
+  }, 'message');
   t.is(actual, expected);
 });
 
-test('.throws(fn, str) checks that error.message === str', async function(t) {
-  const throwFoo = function() {
-    throw new Error('foo');
+test('.throws - success - message regex assertion', function(t) {
+  const expected = new Error('message');
+  const actual = assert.throws(() => {
+    throw expected;
+  }, /^message$/);
+  t.is(actual, expected);
+});
+
+test('.throws - success - constructor assertion', function(t) {
+  const expected = new SyntaxError('message');
+  const actual = assert.throws(() => {
+    throw expected;
+  }, SyntaxError);
+  t.is(actual, expected);
+});
+
+test('.throws - success - object assertion', function(t) {
+  const expected = new SyntaxError('message');
+  const actual = assert.throws(
+    () => {
+      throw expected;
+    },
+    {
+      instanceOf: SyntaxError,
+      is: expected,
+      message: 'message',
+      name: 'SyntaxError',
+    }
+  );
+  t.is(actual, expected);
+});
+
+test('.throwsAsync - error - non function/promise arguments', function(t) {
+  return t.throwsAsync(() => assert.throwsAsync(null), {
+    message: /^`assert.throwsAsync\(\)` must be called with a function or promise/,
+  });
+});
+
+test('.throwsAsync - error - invalid assertion', function(t) {
+  const assertion = {pizza: 'not a valid key'};
+  return t.throwsAsync(() => assert.throwsAsync(() => 'hi', assertion), {
+    message: /^The second argument to `assert.throwsAsync\(\)` contains unexpected/,
+  });
+});
+
+test('.throwsAsync - error - synchronous return', function(t) {
+  return t.throwsAsync(() => assert.throwsAsync(() => 'hello'), {
+    message: /Function returned synchronously, use `assert.throws\(\)` instead[^]*Function returned/,
+  });
+});
+
+test('.throwsAsync - error - synchronous exception', function(t) {
+  const thrower = () => {
+    throw new Error('typos!');
   };
 
-  const rejectFoo = Promise.reject(new Error('foo'));
-
-  t.notThrows(function() { assert.throws(throwFoo, 'foo'); });
-  t.throws(function() { assert.throws(throwFoo, 'bar'); });
-
-  await t.notThrowsAsync(assert.throws(rejectFoo, 'foo'));
-  await t.throwsAsync(assert.throws(rejectFoo, 'bar'));
+  return t.throwsAsync(() => assert.throwsAsync(thrower), {
+    message: /Function threw synchronously, use `assert.throws\(\)` instead[^]*Function threw/,
+  });
 });
 
-test('.throws should throw if passed a bad value', function(t) {
-  const err = t.throws(function() {
-    assert.throws('not a function');
-  });
+test('.throwsAsync - error - resolved promise', function(t) {
+  const resolution = Promise.resolve('hi');
 
-  t.is(err.name, 'TypeError'); // eslint-disable-next-line max-len
-  t.regex(err.message, /t\.throws must be called with a function, Promise, or Observable/);
+  return t.throwsAsync(() => assert.throwsAsync(resolution), {
+    message: /^Missing expected rejection[^]*Promise resolved with/,
+  });
 });
 
-test('.notThrows should throw if passed a bad value', function(t) {
-  const err = t.throws(function() {
-    assert.notThrows('not a function');
-  });
+test('.throwsAsync - error - resolved promise - custom message', function(t) {
+  const resolution = Promise.resolve('hi');
 
-  t.is(err.name, 'TypeError'); // eslint-disable-next-line max-len
-  t.regex(err.message, /t\.notThrows must be called with a function, Promise, or Observable/);
+  return t.throwsAsync(() => assert.throwsAsync(resolution, null, 'msg'), {
+    message: /^msg[^]*Promise resolved with/,
+  });
 });
 
-test('.notThrows()', function(t) {
-  t.notThrows(function() { // eslint-disable-next-line no-empty-function
-    assert.notThrows(function() {});
+test('.throwsAsync - error - returned resolved promise', function(t) {
+  const resolver = () => Promise.resolve('hi');
+
+  return t.throwsAsync(() => assert.throwsAsync(resolver), {
+    message: /^Missing expected rejection[^]*Returned promise resolved with/,
+  });
+});
+
+test('.throwsAsync - error - returned resolved promise - custom message', function(t) {
+  const resolver = () => Promise.resolve('hi');
+
+  return t.throwsAsync(() => assert.throwsAsync(resolver, null, 'msg'), {
+    message: /^msg[^]*Returned promise resolved with/,
+  });
+});
+
+test('.throwsAsync - error - string message does not match', function(t) {
+  const expected = new Error('message');
+  const rejection = Promise.reject(expected);
+  return t.throwsAsync(
+    () => assert.throwsAsync(rejection, 'this does not match'),
+    {
+      message: /Promise rejected with unexpected exception[^]*Expected message to equal/,
+    }
+  );
+});
+
+test('.throwsAsync - error - class does not match', function(t) {
+  const expected = new SyntaxError('message');
+  const rejection = Promise.reject(expected);
+  return t.throwsAsync(() => assert.throwsAsync(rejection, TypeError), {
+    message: /Promise rejected with unexpected exception[^]*Expected instance of/,
+  });
+});
+
+test('.throwsAsync - success - no assertions', async(t) => {
+  const expected = new Error();
+  const rejection = Promise.reject(expected);
+
+  const actual = await assert.throwsAsync(rejection);
+  t.is(actual, expected);
+});
+
+test('.throwsAsync - success - message string assertion', async(t) => {
+  const expected = new Error('message');
+  const rejection = Promise.reject(expected);
+
+  const actual = await assert.throwsAsync(rejection, 'message');
+  t.is(actual, expected);
+});
+
+test('.throwsAsync - success - message regex assertion', async(t) => {
+  const expected = new Error('message');
+  const rejection = Promise.reject(expected);
+
+  const actual = await assert.throwsAsync(rejection, /^message$/);
+  t.is(actual, expected);
+});
+
+test('.throwsAsync - success - constructor assertion', async(t) => {
+  const expected = new SyntaxError('message');
+  const rejection = Promise.reject(expected);
+
+  const actual = await assert.throwsAsync(rejection, SyntaxError);
+  t.is(actual, expected);
+});
+
+test('.throwsAsync - success - object assertion', async(t) => {
+  const expected = new SyntaxError('message');
+  const rejection = Promise.reject(expected);
+
+  const actual = await assert.throwsAsync(rejection, {
+    instanceOf: SyntaxError,
+    is: expected,
+    message: 'message',
+    name: 'SyntaxError',
   });
 
-  t.throws(function() {
-    assert.notThrows(function() {
-      throw new Error('foo');
-    });
+  t.is(actual, expected);
+});
+
+test('.notThrows - error - non function argument', function(t) {
+  t.throws(() => assert.notThrows(null), {
+    message: /^`assert.notThrows\(\)` must be called with a function/,
   });
+
+  t.throws(() => assert.notThrows(Promise.resolve()), {
+    message: /^`assert.notThrows\(\)` must be called with a function/,
+  });
+});
+
+test('.notThrows - error - asynchronous resolution', function(t) {
+  const resolver = () => Promise.resolve();
+
+  t.throws(() => assert.notThrows(resolver), {
+    message: /Function returned a promise, use `assert.notThrowsAsync\(\)` instead/,
+  });
+});
+
+test('.notThrows - error - asynchronous rejection', function(t) {
+  const rejecter = () => Promise.reject(new Error('typos!'));
+
+  t.throws(() => assert.notThrows(rejecter), {
+    message: /Function returned a promise, use `assert.notThrowsAsync\(\)` instead/,
+  });
+});
+
+test('.notThrows - error - exception thrown - default message', (t) => {
+  const thrower = () => {
+    throw new Error('typos!');
+  };
+
+  t.throws(() => assert.notThrows(thrower), {
+    message: /^Got unwanted exception[^]*Function threw/,
+  });
+});
+
+test('.notThrows - error - exception thrown - custom message', (t) => {
+  const thrower = () => {
+    throw new Error('typos!');
+  };
+
+  t.throws(() => assert.notThrows(thrower, 'my message'), {
+    message: /^my message[^]*Function threw/,
+  });
+});
+
+test('.notThrows - success', function(t) {
+  t.notThrows(() => assert.notThrows(() => 'hello there'));
+});
+
+test('.notThrowsAsync - error - non function/promise argument', (t) => {
+  return t.throwsAsync(() => assert.notThrowsAsync(null), {
+    message: /^`assert.notThrowsAsync\(\)` must be called with a function/,
+  });
+});
+
+test('.notThrowsAsync - error - synchronous exception', function(t) {
+  const thrower = () => {
+    throw new Error('typos!');
+  };
+
+  return t.throwsAsync(() => assert.notThrowsAsync(thrower), {
+    message: /Function threw synchronously, use `assert.notThrows\(\)` instead[^]*Function threw/,
+  });
+});
+
+test('.notThrowsAsync - error - synchronous return', function(t) {
+  return t.throwsAsync(() => assert.notThrowsAsync(() => 'hi'), {
+    message: /Function returned synchronously, use `assert.notThrows\(\)` instead[^]*Function returned/,
+  });
+});
+
+test('.notThrowsAsync - error - rejected promise - default message', (t) => {
+  const rejection = Promise.reject(new Error('error!'));
+
+  return t.throwsAsync(() => assert.notThrowsAsync(rejection), {
+    message: /Got unwanted rejection[^]*Promise rejected with:/,
+  });
+});
+
+test('.notThrowsAsync - error - rejected promise - custom message', (t) => {
+  const rejection = Promise.reject(new Error('error!'));
+
+  return t.throwsAsync(() => assert.notThrowsAsync(rejection, 'mesg'), {
+    message: /mesg[^]*Promise rejected with:/,
+  });
+});
+
+test('.notThrowsAsync - error - returned rejected promise - default message', (t) => {
+  const rejecter = () => Promise.reject(new Error('error!'));
+
+  return t.throwsAsync(() => assert.notThrowsAsync(rejecter), {
+    message: /Got unwanted rejection[^]*Returned promise rejected with:/,
+  });
+});
+
+test('.notThrowsAsync - error - returned rejected promise - custom message', (t) => {
+  const rejecter = () => Promise.reject(new Error('error!'));
+
+  return t.throwsAsync(() => assert.notThrowsAsync(rejecter, 'mesg'), {
+    message: /mesg[^]*Returned promise rejected with:/,
+  });
+});
+
+test('.notThrowsAsync - success - resolved promise', (t) => {
+  const resolution = Promise.resolve('hello');
+
+  return t.notThrowsAsync(() => assert.notThrowsAsync(resolution));
+});
+
+test('.notThrowsAsync - success - return resolved promise', (t) => {
+  const resolver = () => Promise.resolve('hello');
+
+  return t.notThrowsAsync(() => assert.notThrowsAsync(resolver));
 });
 
 test('.regex()', function(t) {
