@@ -1,9 +1,9 @@
 'use strict';
 
 const test = require('ava');
-const assert = require('../../lib/assert');
+const assert = require('../../../lib/assert');
 const callSignature = require('call-signature');
-const {ENHANCED, NOT_ENHANCED} = require('../../lib/patterns');
+const {ENHANCED, NOT_ENHANCED} = require('../../../lib/patterns');
 
 test('patterns', function(t) {
 

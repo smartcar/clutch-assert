@@ -2,7 +2,7 @@
 
 const test = require('ava');
 const {sep} = require('path');
-const helpers = require('../../loader/helpers');
+const helpers = require('../../../loader/helpers');
 
 test('findPackageDir', function(t) {
 
