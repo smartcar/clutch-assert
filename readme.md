@@ -118,29 +118,94 @@ Assert that `value` is equal to `expected`.
 
 Assert that `value` is not equal to `expected`.
 
+### `.deepEqual(value, expected, [message])`
+
+Assert that `value` is deeply equal to `expected`.
+
+### `.notDeepEqual(value, expected, [message])`
+
+Assert that `value` is not deeply equal to `expected`.
+
 ### `.keys(object, keys, [message])`
 
 Assert that `object` contains all of and only the `keys` specified
 
-### `.deepEqual(value, expected, [message])`
+### `.throws(fn, expected, [message]])`
 
-Assert that `value` is deep equal to `expected`.
+Assert that an error is thrown. `fn` must be a function which should throw. The thrown value *must* be an error. It is returned so you can run more assertions against it.
 
-### `.notDeepEqual(value, expected, [message])`
+`expected` can be a constructor, in which case the thrown error must be an instance of the constructor. It can be a string, which is compared against the thrown error's message, or a regular expression which is matched against this message. You can also specify a matcher object with one or more of the following properties:
 
-Assert that `value` is not deep equal to `expected`.
+* `instanceOf`: a constructor, the thrown error must be an instance of
+* `is`: the thrown error must be strictly equal to `expected.is`
+* `message`: either a string, which is compared against the thrown error's message, or a regular expression, which is matched against this message
+* `name`: the expected `.name` value of the thrown error
+* `code`: the expected `.code` value of the thrown error
 
-### `.throws(function|promise, [error, [message]])`
+Example:
 
-Assert that `function` throws an error, or `promise` rejects with an error.
+```js
+const fn = () => {
+  throw new TypeError('hello there');
+};
 
-`error` can be a constructor, regex, error message or validation function.
+test('throws', t => {
+  const error = t.throws(() => {
+    fn();
+  }, TypeError);
 
-Returns the error thrown by `function` or the rejection reason of `promise`.
+  t.is(error.message, 'hello there');
+});
+```
 
-### `.notThrows(function|promise, [message])`
+### `.throwsAsync(thrower, expected, [message]])`
 
-Assert that `function` doesn't throw an `error` or `promise` resolves.
+Assert that an error is thrown. `thrower` can be an async function which should throw, or a promise that should reject. This assertion must be awaited.
+
+The thrown value *must* be an error. It is returned so you can run more assertions against it.
+
+`expected` can be a constructor, in which case the thrown error must be an instance of the constructor. It can be a string, which is compared against the thrown error's message, or a regular expression which is matched against this message. You can also specify a matcher object with one or more of the following properties:
+
+* `instanceOf`: a constructor, the thrown error must be an instance of
+* `is`: the thrown error must be strictly equal to `expected.is`
+* `message`: either a string, which is compared against the thrown error's message, or a regular expression, which is matched against this message
+* `name`: the expected `.name` value of the thrown error
+* `code`: the expected `.code` value of the thrown error
+
+Example:
+
+```js
+test('throws', async t => {
+  await t.throwsAsync(async () => {
+    throw new TypeError('hello there');
+  }, {instanceOf: TypeError, message: 'hello there'});
+});
+```
+
+```js
+const promise = Promise.reject(new TypeError('hello there'));
+
+test('rejects', async t => {
+  const error = await t.throwsAsync(promise);
+  t.is(error.message, 'hello there');
+});
+```
+
+### `.notThrows(fn, [message])`
+
+Assert that no error is thrown. `fn` must be a function which shouldn't throw.
+
+### `.notThrowsAsync(nonThrower, [message])`
+
+Assert that no error is thrown. `nonThrower` can be an async function which shouldn't throw, or a promise that should resolve.
+
+Like the `.throwsAsync()` assertion, you must wait for the assertion to complete:
+
+```js
+test('resolves', async t => {
+  await t.notThrowsAsync(promise);
+});
+```
 
 ### `.regex(contents, regex, [message])`
 
