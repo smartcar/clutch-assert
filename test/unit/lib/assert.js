@@ -232,15 +232,22 @@ test('.deepEqual()', function(t) {
     assert.deepEqual(['a', 'b'], ['a', 'a']);
   });
 
-  t.throws(function() {
-    assert.deepEqual([['a', 'b'], 'c'], [['a', 'b'], 'd']);
-  }, / 'c' ].*? 'd' ]/);
+  let err, msg;
 
-  t.throws(function() {
+  err = t.throws(function() {
+    assert.deepEqual([['a', 'b'], 'c'], [['a', 'b'], 'd']);
+  });
+  msg = err.message.replace(/\n/g, '');
+  t.regex(msg, /'c'\s*].*?'d'\s*]/);
+
+  err = t.throws(function() {
     var circular = ['a', 'b'];
     circular.push(circular);
     assert.deepEqual([circular, 'c'], [circular, 'd']);
-  }, / 'c' ].*? 'd' ]/);
+  });
+
+  msg = err.message.replace(/\n/g, '');
+  t.regex(msg, /'c'\s*].*?'d'\s*]/);
 });
 
 test('.notDeepEqual()', function(t) {
