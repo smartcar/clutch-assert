@@ -139,6 +139,6 @@ test.serial('integration', async function(t) {
     require('../../fixtures/to_be_instrumented');
   });
 
-  t.is(err.message, "Cannot find module 'power-assert'");
+  t.regex(err.message, /^Cannot find module 'power-assert'/);
 
 });
