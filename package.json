@@ -60,7 +60,7 @@
     "semantic-release": "^15.13.4",
     "sinon": "^7.2.7"
   },
- "ava": {
+  "ava": {
     "helpers": [
       "**/fixtures/**/*"
     ]
