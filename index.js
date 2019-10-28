@@ -19,7 +19,7 @@ function customize(options) {
   const powered = empower(
     assert,
     formatter(options.output),
-    Object.assign(empowerOptions, options.assertion)
+    Object.assign(empowerOptions, options.assertion),
   );
   powered.customize = customize;
 

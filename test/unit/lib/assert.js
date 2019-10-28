@@ -349,7 +349,7 @@ test('.throws - error - no error thrown - custom message', function(t) {
     () => assert.throws(() => 'hello there', null, 'this is my custom message'),
     {
       message: /^this is my custom message[^]*Function returned/,
-    }
+    },
   );
 });
 
@@ -363,7 +363,7 @@ test('.throws - error - string message does not match', function(t) {
     },
     {
       message: /Function threw unexpected[^]*Expected message to equal/,
-    }
+    },
   );
 });
 
@@ -377,7 +377,7 @@ test('.throws - error - class does not match', function(t) {
     },
     {
       message: /Function threw unexpected[^]*Expected instance of/,
-    }
+    },
   );
 });
 
@@ -424,7 +424,7 @@ test('.throws - success - object assertion', function(t) {
       is: expected,
       message: 'message',
       name: 'SyntaxError',
-    }
+    },
   );
   t.is(actual, expected);
 });
@@ -497,7 +497,7 @@ test('.throwsAsync - error - string message does not match', function(t) {
     () => assert.throwsAsync(rejection, 'this does not match'),
     {
       message: /Promise rejected with unexpected exception[^]*Expected message to equal/,
-    }
+    },
   );
 });
 
