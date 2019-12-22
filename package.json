@@ -58,7 +58,7 @@
     "mockery": "^2.0.0",
     "nyc": "^14.0.0",
     "semantic-release": "^15.13.4",
-    "sinon": "^7.2.7"
+    "sinon": "^8.0.0"
   },
   "ava": {
     "helpers": [
