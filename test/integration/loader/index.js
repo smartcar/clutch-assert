@@ -113,10 +113,10 @@ test.serial('invalid rc file', async function(t) {
     findParent: () => path,
   });
 
-  const err = t.throws(() => require('../../../loader'), SyntaxError);
-
-  t.regex(err.message, /^Unexpected token \w+( in JSON at position \d+)?$/);
-
+  t.throws(() => require('../../../loader'), {
+    instanceOf: SyntaxError,
+    message: /^Unexpected token \w+( in JSON at position \d+)?$/,
+  });
 });
 
 test.serial('integration', async function(t) {
