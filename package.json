@@ -57,7 +57,7 @@
     "greenkeeper-lockfile": "^1.15.1",
     "mockery": "^2.0.0",
     "nyc": "^15.0.0",
-    "semantic-release": "^16.0.0",
+    "semantic-release": "^17.0.0",
     "sinon": "^8.0.0"
   },
   "ava": {
