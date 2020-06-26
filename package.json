@@ -2,21 +2,6 @@
   "name": "clutch-assert",
   "version": "0.0.0-semantic-release",
   "description": "Combine Ava's assertion API with Power Assert",
-  "main": "index.js",
-  "license": "MIT",
-  "author": {
-    "name": "Smartcar",
-    "email": "hello@smartcar.com",
-    "url": "https://smartcar.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/smartcar/clutch-assert.git"
-  },
-  "bugs": {
-    "url": "https://github.com/smartcar/clutch-assert/issues"
-  },
-  "homepage": "https://github.com/smartcar/clutch-assert#readme",
   "keywords": [
     "ava",
     "power-assert",
@@ -28,14 +13,30 @@
     "espower",
     "empower"
   ],
-  "engines": {
-    "node": ">=10.0.0"
+  "homepage": "https://github.com/smartcar/clutch-assert#readme",
+  "bugs": {
+    "url": "https://github.com/smartcar/clutch-assert/issues"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smartcar/clutch-assert.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Smartcar",
+    "email": "hello@smartcar.com",
+    "url": "https://smartcar.com"
+  },
+  "main": "index.js",
+  "files": [
+    "lib",
+    "loader"
+  ],
   "scripts": {
-    "test": "ava",
-    "posttest": "npm run lint -s",
+    "cover": "nyc npm test -s",
     "lint": "eslint . --cache",
-    "cover": "nyc npm test -s"
+    "test": "ava",
+    "posttest": "npm run lint -s"
   },
   "dependencies": {
     "ansi-styles": "^4.0.0",
@@ -50,13 +51,15 @@
     "trim-off-newlines": "^1.0.1"
   },
   "devDependencies": {
+    "@smartcar/zamboni": "^2.0.1",
     "ava": "^3.0.0",
     "call-signature": "0.0.2",
-    "eslint": "^7.1.0",
-    "eslint-config-smartcar": "^3.0.0",
     "mockery": "^2.0.0",
     "nyc": "^15.0.0",
     "semantic-release": "^17.0.0",
     "sinon": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
