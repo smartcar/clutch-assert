@@ -1,15 +1,9 @@
 {
   "lines": 95,
-  "all" : true,
+  "all": true,
   "cache": true,
-  "reporter": [
-    "lcov",
-    "text"
-  ],
-  "exclude": [
-    "test",
-    "node_modules"
-  ],
+  "reporter": ["lcov", "text"],
+  "exclude": ["test", "node_modules"],
   "check-coverage": true,
   "report-dir": ".nyc_output"
 }

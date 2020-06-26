@@ -12,13 +12,11 @@ var rc;
 try {
   rc = JSON.parse(fs.readFileSync(parent + path.sep + '.clutchrc'));
 } catch (e) {
-
   if (e.code !== 'ENOENT') {
     throw e;
   }
 
   // no clutchrc found
-
 }
 
 const dir = helpers.getDirectory(rc);

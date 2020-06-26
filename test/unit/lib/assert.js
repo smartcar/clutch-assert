@@ -3,176 +3,182 @@
 const test = require('ava');
 const assert = require('../../../lib/assert');
 
-test('.pass()', function(t) {
-  t.notThrows(function() {
+test('.pass()', function (t) {
+  t.notThrows(function () {
     assert.pass();
   });
 });
 
-test('.fail()', function(t) {
-  t.throws(function() {
+test('.fail()', function (t) {
+  t.throws(function () {
     assert.fail();
   });
 });
 
-test('.truthy()', function(t) {
-  t.throws(function() {
+test('.truthy()', function (t) {
+  t.throws(function () {
     assert.truthy(0);
     assert.truthy(false);
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.truthy(1);
     assert.truthy(true);
   });
 });
 
-test('.falsy()', function(t) {
-  t.throws(function() {
+test('.falsy()', function (t) {
+  t.throws(function () {
     assert.falsy(1);
     assert.falsy(true);
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.falsy(0);
     assert.falsy(false);
   });
 });
 
-test('.true()', function(t) {
-  t.throws(function() {
+test('.true()', function (t) {
+  t.throws(function () {
     assert.true(1);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.true(0);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.true(false);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.true('foo');
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.true(true);
   });
 });
 
-test('.false()', function(t) {
-  t.throws(function() {
+test('.false()', function (t) {
+  t.throws(function () {
     assert.false(0);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.false(1);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.false(true);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.false('foo');
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.false(false);
   });
 });
 
-test('.is()', function(t) {
-  t.notThrows(function() {
+test('.is()', function (t) {
+  t.notThrows(function () {
     assert.is('foo', 'foo');
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.is('foo', 'bar');
   });
 });
 
-test('.not()', function(t) {
-  t.notThrows(function() {
+test('.not()', function (t) {
+  t.notThrows(function () {
     assert.not('foo', 'bar');
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.not('foo', 'foo');
   });
 });
 
-test('.deepEqual()', function(t) {
+test('.deepEqual()', function (t) {
   // Tests starting here are to detect regressions in the underlying libraries
   // used to test deep object equality
 
-  t.throws(function() {
-    assert.deepEqual({a: false}, {a: 0});
+  t.throws(function () {
+    assert.deepEqual({ a: false }, { a: 0 });
   });
 
-  t.notThrows(function() {
-    assert.deepEqual({
-      a: 'a',
-      b: 'b',
-    }, {
-      b: 'b',
-      a: 'a',
-    });
-  });
-
-  t.notThrows(function() {
-    assert.deepEqual({
-      a: 'a',
-      b: 'b',
-      c: {
-        d: 'd',
+  t.notThrows(function () {
+    assert.deepEqual(
+      {
+        a: 'a',
+        b: 'b',
       },
-    }, {
-      c: {
-        d: 'd',
+      {
+        b: 'b',
+        a: 'a',
       },
-      b: 'b',
-      a: 'a',
-    });
+    );
   });
 
-  t.throws(function() {
+  t.notThrows(function () {
+    assert.deepEqual(
+      {
+        a: 'a',
+        b: 'b',
+        c: {
+          d: 'd',
+        },
+      },
+      {
+        c: {
+          d: 'd',
+        },
+        b: 'b',
+        a: 'a',
+      },
+    );
+  });
+
+  t.throws(function () {
     assert.deepEqual([1, 2, 3], [1, 2, 3, 4]);
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.deepEqual([1, 2, 3], [1, 2, 3]);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.deepEqual([1, 2, 3], [1, 2, 3, 4]);
   });
 
-  t.throws(function() {
-    var fnA = function(a) {
+  t.throws(function () {
+    var fnA = function (a) {
       return a;
     };
-    var fnB = function(a) {
+    var fnB = function (a) {
       return a;
     };
 
     assert.deepEqual(fnA, fnB);
   });
 
-  t.notThrows(function() {
-    var x1 = {z: 4};
-    var y1 = {x: x1};
+  t.notThrows(function () {
+    var x1 = { z: 4 };
+    var y1 = { x: x1 };
     x1.y = y1;
 
-    var x2 = {z: 4};
-    var y2 = {x: x2};
+    var x2 = { z: 4 };
+    var y2 = { x: x2 };
     x2.y = y2;
 
     assert.deepEqual(x1, x2);
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     function Foo(a) {
       this.a = a;
     }
@@ -183,7 +189,7 @@ test('.deepEqual()', function(t) {
     assert.deepEqual(x, y);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     function Foo(a) {
       this.a = a;
     }
@@ -198,20 +204,23 @@ test('.deepEqual()', function(t) {
     assert.deepEqual(x, y);
   });
 
-  t.throws(function() {
-    assert.deepEqual({
-      a: 'a',
-      b: 'b',
-      c: {
-        d: false,
+  t.throws(function () {
+    assert.deepEqual(
+      {
+        a: 'a',
+        b: 'b',
+        c: {
+          d: false,
+        },
       },
-    }, {
-      c: {
-        d: 0,
+      {
+        c: {
+          d: 0,
+        },
+        b: 'b',
+        a: 'a',
       },
-      b: 'b',
-      a: 'a',
-    });
+    );
   });
 
   t.throws(function() {
@@ -304,31 +313,31 @@ test('.deepEqual()', function(t) {
 
   // Regression test end here
 
-  t.notThrows(function() {
-    assert.deepEqual({a: 'a'}, {a: 'a'});
+  t.notThrows(function () {
+    assert.deepEqual({ a: 'a' }, { a: 'a' });
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.deepEqual(['a', 'b'], ['a', 'b']);
   });
 
-  t.throws(function() {
-    assert.deepEqual({a: 'a'}, {a: 'b'});
+  t.throws(function () {
+    assert.deepEqual({ a: 'a' }, { a: 'b' });
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.deepEqual(['a', 'b'], ['a', 'a']);
   });
 
   let err, msg;
 
-  err = t.throws(function() {
+  err = t.throws(function () {
     assert.deepEqual([['a', 'b'], 'c'], [['a', 'b'], 'd']);
   });
   msg = err.message.replace(/\n/g, '');
   t.regex(msg, /'c'\s*].*?'d'\s*]/);
 
-  err = t.throws(function() {
+  err = t.throws(function () {
     var circular = ['a', 'b'];
     circular.push(circular);
     assert.deepEqual([circular, 'c'], [circular, 'd']);
@@ -338,63 +347,63 @@ test('.deepEqual()', function(t) {
   t.regex(msg, /'c'\s*].*?'d'\s*]/);
 });
 
-test('.notDeepEqual()', function(t) {
-  t.notThrows(function() {
-    assert.notDeepEqual({a: 'a'}, {a: 'b'});
+test('.notDeepEqual()', function (t) {
+  t.notThrows(function () {
+    assert.notDeepEqual({ a: 'a' }, { a: 'b' });
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.notDeepEqual(['a', 'b'], ['c', 'd']);
   });
 
-  t.throws(function() {
-    assert.notDeepEqual({a: 'a'}, {a: 'a'});
+  t.throws(function () {
+    assert.notDeepEqual({ a: 'a' }, { a: 'a' });
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.notDeepEqual(['a', 'b'], ['a', 'b']);
   });
 });
 
-test('.keys()', function(t) {
-  t.notThrows(function() {
+test('.keys()', function (t) {
+  t.notThrows(function () {
     assert.keys({}, []);
   });
 
-  t.notThrows(function() {
-    assert.keys({'': 2}, ['']);
+  t.notThrows(function () {
+    assert.keys({ '': 2 }, ['']);
   });
 
-  t.notThrows(function() {
-    assert.keys({a: 1}, 'a');
+  t.notThrows(function () {
+    assert.keys({ a: 1 }, 'a');
   });
 
-  t.notThrows(function() {
-    assert.keys({a: 1, b: 2}, ['b', 'a']);
+  t.notThrows(function () {
+    assert.keys({ a: 1, b: 2 }, ['b', 'a']);
   });
 
-  t.notThrows(function() {
-    assert.keys({a: 1, b: {c: 2}}, ['b', 'a']);
+  t.notThrows(function () {
+    assert.keys({ a: 1, b: { c: 2 } }, ['b', 'a']);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.keys({}, '');
   });
 
-  t.throws(function() {
-    assert.keys({a: 1, b: 2}, ['a']);
+  t.throws(function () {
+    assert.keys({ a: 1, b: 2 }, ['a']);
   });
 
-  t.throws(function() {
-    assert.keys({a: 1}, ['a', 'b']);
+  t.throws(function () {
+    assert.keys({ a: 1 }, ['a', 'b']);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.keys({}, 'a');
   });
 });
 
-test('.throws - error - non function arguments', function(t) {
+test('.throws - error - non function arguments', function (t) {
   t.throws(() => assert.throws(null), {
     message: /^`assert.throws\(\)` must be called with a function/,
   });
@@ -404,14 +413,14 @@ test('.throws - error - non function arguments', function(t) {
   });
 });
 
-test('.throws - error - invalid assertion', function(t) {
-  const assertion = {pizza: 'not a valid key'};
+test('.throws - error - invalid assertion', function (t) {
+  const assertion = { pizza: 'not a valid key' };
   t.throws(() => assert.throws(() => 'hi', assertion), {
     message: /^The second argument to `assert.throws\(\)` contains unexpected/,
   });
 });
 
-test('.throws - error - asynchronous resolution', function(t) {
+test('.throws - error - asynchronous resolution', function (t) {
   const resolver = () => Promise.resolve();
 
   t.throws(() => assert.throws(resolver), {
@@ -419,20 +428,20 @@ test('.throws - error - asynchronous resolution', function(t) {
   });
 });
 
-test('.throws - error - asynchronous rejection', function(t) {
+test('.throws - error - asynchronous rejection', function (t) {
   const rejecter = () => Promise.reject(new Error('typos!'));
   t.throws(() => assert.throws(rejecter), {
     message: /Function returned a promise, use `assert.throwsAsync\(\)` instead/,
   });
 });
 
-test('.throws - error - no error thrown - default message', function(t) {
+test('.throws - error - no error thrown - default message', function (t) {
   t.throws(() => assert.throws(() => 'hello there'), {
     message: /^Missing expected exception[^]*Function returned/,
   });
 });
 
-test('.throws - error - no error thrown - custom message', function(t) {
+test('.throws - error - no error thrown - custom message', function (t) {
   t.throws(
     () => assert.throws(() => 'hello there', null, 'this is my custom message'),
     {
@@ -441,7 +450,7 @@ test('.throws - error - no error thrown - custom message', function(t) {
   );
 });
 
-test('.throws - error - string message does not match', function(t) {
+test('.throws - error - string message does not match', function (t) {
   const expected = new Error('message');
   t.throws(
     () => {
@@ -455,7 +464,7 @@ test('.throws - error - string message does not match', function(t) {
   );
 });
 
-test('.throws - error - class does not match', function(t) {
+test('.throws - error - class does not match', function (t) {
   const expected = new SyntaxError('message');
   t.throws(
     () => {
@@ -469,7 +478,7 @@ test('.throws - error - class does not match', function(t) {
   );
 });
 
-test('.throws - success - no assertions', function(t) {
+test('.throws - success - no assertions', function (t) {
   const expected = new Error();
   const actual = assert.throws(() => {
     throw expected;
@@ -477,7 +486,7 @@ test('.throws - success - no assertions', function(t) {
   t.is(actual, expected);
 });
 
-test('.throws - success - message string assertion', function(t) {
+test('.throws - success - message string assertion', function (t) {
   const expected = new Error('message');
   const actual = assert.throws(() => {
     throw expected;
@@ -485,7 +494,7 @@ test('.throws - success - message string assertion', function(t) {
   t.is(actual, expected);
 });
 
-test('.throws - success - message regex assertion', function(t) {
+test('.throws - success - message regex assertion', function (t) {
   const expected = new Error('message');
   const actual = assert.throws(() => {
     throw expected;
@@ -493,7 +502,7 @@ test('.throws - success - message regex assertion', function(t) {
   t.is(actual, expected);
 });
 
-test('.throws - success - constructor assertion', function(t) {
+test('.throws - success - constructor assertion', function (t) {
   const expected = new SyntaxError('message');
   const actual = assert.throws(() => {
     throw expected;
@@ -501,7 +510,7 @@ test('.throws - success - constructor assertion', function(t) {
   t.is(actual, expected);
 });
 
-test('.throws - success - object assertion', function(t) {
+test('.throws - success - object assertion', function (t) {
   const expected = new SyntaxError('message');
   const actual = assert.throws(
     () => {
@@ -517,26 +526,26 @@ test('.throws - success - object assertion', function(t) {
   t.is(actual, expected);
 });
 
-test('.throwsAsync - error - non function/promise arguments', function(t) {
+test('.throwsAsync - error - non function/promise arguments', function (t) {
   return t.throwsAsync(() => assert.throwsAsync(null), {
     message: /^`assert.throwsAsync\(\)` must be called with a function or promise/,
   });
 });
 
-test('.throwsAsync - error - invalid assertion', function(t) {
-  const assertion = {pizza: 'not a valid key'};
+test('.throwsAsync - error - invalid assertion', function (t) {
+  const assertion = { pizza: 'not a valid key' };
   return t.throwsAsync(() => assert.throwsAsync(() => 'hi', assertion), {
     message: /^The second argument to `assert.throwsAsync\(\)` contains unexpected/,
   });
 });
 
-test('.throwsAsync - error - synchronous return', function(t) {
+test('.throwsAsync - error - synchronous return', function (t) {
   return t.throwsAsync(() => assert.throwsAsync(() => 'hello'), {
     message: /Function returned synchronously, use `assert.throws\(\)` instead[^]*Function returned/,
   });
 });
 
-test('.throwsAsync - error - synchronous exception', function(t) {
+test('.throwsAsync - error - synchronous exception', function (t) {
   const thrower = () => {
     throw new Error('typos!');
   };
@@ -546,7 +555,7 @@ test('.throwsAsync - error - synchronous exception', function(t) {
   });
 });
 
-test('.throwsAsync - error - resolved promise', function(t) {
+test('.throwsAsync - error - resolved promise', function (t) {
   const resolution = Promise.resolve('hi');
 
   return t.throwsAsync(() => assert.throwsAsync(resolution), {
@@ -554,7 +563,7 @@ test('.throwsAsync - error - resolved promise', function(t) {
   });
 });
 
-test('.throwsAsync - error - resolved promise - custom message', function(t) {
+test('.throwsAsync - error - resolved promise - custom message', function (t) {
   const resolution = Promise.resolve('hi');
 
   return t.throwsAsync(() => assert.throwsAsync(resolution, null, 'msg'), {
@@ -562,7 +571,7 @@ test('.throwsAsync - error - resolved promise - custom message', function(t) {
   });
 });
 
-test('.throwsAsync - error - returned resolved promise', function(t) {
+test('.throwsAsync - error - returned resolved promise', function (t) {
   const resolver = () => Promise.resolve('hi');
 
   return t.throwsAsync(() => assert.throwsAsync(resolver), {
@@ -570,7 +579,7 @@ test('.throwsAsync - error - returned resolved promise', function(t) {
   });
 });
 
-test('.throwsAsync - error - returned resolved promise - custom message', function(t) {
+test('.throwsAsync - error - returned resolved promise - custom message', function (t) {
   const resolver = () => Promise.resolve('hi');
 
   return t.throwsAsync(() => assert.throwsAsync(resolver, null, 'msg'), {
@@ -578,7 +587,7 @@ test('.throwsAsync - error - returned resolved promise - custom message', functi
   });
 });
 
-test('.throwsAsync - error - string message does not match', function(t) {
+test('.throwsAsync - error - string message does not match', function (t) {
   const expected = new Error('message');
   const rejection = Promise.reject(expected);
   return t.throwsAsync(
@@ -589,7 +598,7 @@ test('.throwsAsync - error - string message does not match', function(t) {
   );
 });
 
-test('.throwsAsync - error - class does not match', function(t) {
+test('.throwsAsync - error - class does not match', function (t) {
   const expected = new SyntaxError('message');
   const rejection = Promise.reject(expected);
   return t.throwsAsync(() => assert.throwsAsync(rejection, TypeError), {
@@ -597,7 +606,7 @@ test('.throwsAsync - error - class does not match', function(t) {
   });
 });
 
-test('.throwsAsync - success - no assertions', async(t) => {
+test('.throwsAsync - success - no assertions', async t => {
   const expected = new Error();
   const rejection = Promise.reject(expected);
 
@@ -605,7 +614,7 @@ test('.throwsAsync - success - no assertions', async(t) => {
   t.is(actual, expected);
 });
 
-test('.throwsAsync - success - message string assertion', async(t) => {
+test('.throwsAsync - success - message string assertion', async t => {
   const expected = new Error('message');
   const rejection = Promise.reject(expected);
 
@@ -613,7 +622,7 @@ test('.throwsAsync - success - message string assertion', async(t) => {
   t.is(actual, expected);
 });
 
-test('.throwsAsync - success - message regex assertion', async(t) => {
+test('.throwsAsync - success - message regex assertion', async t => {
   const expected = new Error('message');
   const rejection = Promise.reject(expected);
 
@@ -621,7 +630,7 @@ test('.throwsAsync - success - message regex assertion', async(t) => {
   t.is(actual, expected);
 });
 
-test('.throwsAsync - success - constructor assertion', async(t) => {
+test('.throwsAsync - success - constructor assertion', async t => {
   const expected = new SyntaxError('message');
   const rejection = Promise.reject(expected);
 
@@ -629,7 +638,7 @@ test('.throwsAsync - success - constructor assertion', async(t) => {
   t.is(actual, expected);
 });
 
-test('.throwsAsync - success - object assertion', async(t) => {
+test('.throwsAsync - success - object assertion', async t => {
   const expected = new SyntaxError('message');
   const rejection = Promise.reject(expected);
 
@@ -643,7 +652,7 @@ test('.throwsAsync - success - object assertion', async(t) => {
   t.is(actual, expected);
 });
 
-test('.notThrows - error - non function argument', function(t) {
+test('.notThrows - error - non function argument', function (t) {
   t.throws(() => assert.notThrows(null), {
     message: /^`assert.notThrows\(\)` must be called with a function/,
   });
@@ -653,7 +662,7 @@ test('.notThrows - error - non function argument', function(t) {
   });
 });
 
-test('.notThrows - error - asynchronous resolution', function(t) {
+test('.notThrows - error - asynchronous resolution', function (t) {
   const resolver = () => Promise.resolve();
 
   t.throws(() => assert.notThrows(resolver), {
@@ -661,7 +670,7 @@ test('.notThrows - error - asynchronous resolution', function(t) {
   });
 });
 
-test('.notThrows - error - asynchronous rejection', function(t) {
+test('.notThrows - error - asynchronous rejection', function (t) {
   const rejecter = () => Promise.reject(new Error('typos!'));
 
   t.throws(() => assert.notThrows(rejecter), {
@@ -669,7 +678,7 @@ test('.notThrows - error - asynchronous rejection', function(t) {
   });
 });
 
-test('.notThrows - error - exception thrown - default message', (t) => {
+test('.notThrows - error - exception thrown - default message', t => {
   const thrower = () => {
     throw new Error('typos!');
   };
@@ -679,7 +688,7 @@ test('.notThrows - error - exception thrown - default message', (t) => {
   });
 });
 
-test('.notThrows - error - exception thrown - custom message', (t) => {
+test('.notThrows - error - exception thrown - custom message', t => {
   const thrower = () => {
     throw new Error('typos!');
   };
@@ -689,17 +698,17 @@ test('.notThrows - error - exception thrown - custom message', (t) => {
   });
 });
 
-test('.notThrows - success', function(t) {
+test('.notThrows - success', function (t) {
   t.notThrows(() => assert.notThrows(() => 'hello there'));
 });
 
-test('.notThrowsAsync - error - non function/promise argument', (t) => {
+test('.notThrowsAsync - error - non function/promise argument', t => {
   return t.throwsAsync(() => assert.notThrowsAsync(null), {
     message: /^`assert.notThrowsAsync\(\)` must be called with a function/,
   });
 });
 
-test('.notThrowsAsync - error - synchronous exception', function(t) {
+test('.notThrowsAsync - error - synchronous exception', function (t) {
   const thrower = () => {
     throw new Error('typos!');
   };
@@ -709,13 +718,13 @@ test('.notThrowsAsync - error - synchronous exception', function(t) {
   });
 });
 
-test('.notThrowsAsync - error - synchronous return', function(t) {
+test('.notThrowsAsync - error - synchronous return', function (t) {
   return t.throwsAsync(() => assert.notThrowsAsync(() => 'hi'), {
     message: /Function returned synchronously, use `assert.notThrows\(\)` instead[^]*Function returned/,
   });
 });
 
-test('.notThrowsAsync - error - rejected promise - default message', (t) => {
+test('.notThrowsAsync - error - rejected promise - default message', t => {
   const rejection = Promise.reject(new Error('error!'));
 
   return t.throwsAsync(() => assert.notThrowsAsync(rejection), {
@@ -723,7 +732,7 @@ test('.notThrowsAsync - error - rejected promise - default message', (t) => {
   });
 });
 
-test('.notThrowsAsync - error - rejected promise - custom message', (t) => {
+test('.notThrowsAsync - error - rejected promise - custom message', t => {
   const rejection = Promise.reject(new Error('error!'));
 
   return t.throwsAsync(() => assert.notThrowsAsync(rejection, 'mesg'), {
@@ -731,7 +740,7 @@ test('.notThrowsAsync - error - rejected promise - custom message', (t) => {
   });
 });
 
-test('.notThrowsAsync - error - returned rejected promise - default message', (t) => {
+test('.notThrowsAsync - error - returned rejected promise - default message', t => {
   const rejecter = () => Promise.reject(new Error('error!'));
 
   return t.throwsAsync(() => assert.notThrowsAsync(rejecter), {
@@ -739,7 +748,7 @@ test('.notThrowsAsync - error - returned rejected promise - default message', (t
   });
 });
 
-test('.notThrowsAsync - error - returned rejected promise - custom message', (t) => {
+test('.notThrowsAsync - error - returned rejected promise - custom message', t => {
   const rejecter = () => Promise.reject(new Error('error!'));
 
   return t.throwsAsync(() => assert.notThrowsAsync(rejecter, 'mesg'), {
@@ -747,49 +756,49 @@ test('.notThrowsAsync - error - returned rejected promise - custom message', (t)
   });
 });
 
-test('.notThrowsAsync - success - resolved promise', (t) => {
+test('.notThrowsAsync - success - resolved promise', t => {
   const resolution = Promise.resolve('hello');
 
   return t.notThrowsAsync(() => assert.notThrowsAsync(resolution));
 });
 
-test('.notThrowsAsync - success - return resolved promise', (t) => {
+test('.notThrowsAsync - success - return resolved promise', t => {
   const resolver = () => Promise.resolve('hello');
 
   return t.notThrowsAsync(() => assert.notThrowsAsync(resolver));
 });
 
-test('.regex()', function(t) {
-  t.notThrows(function() {
+test('.regex()', function (t) {
+  t.notThrows(function () {
     assert.regex('abc', /^abc$/);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.regex('foo', /^abc$/);
   });
 });
 
-test('.notRegex()', function(t) {
-  t.notThrows(function() {
+test('.notRegex()', function (t) {
+  t.notThrows(function () {
     assert.notRegex('abc', /def/);
   });
 
-  t.throws(function() {
+  t.throws(function () {
     assert.notRegex('abc', /abc/);
   });
 });
 
-test('.ifError()', function(t) {
-  t.throws(function() {
+test('.ifError()', function (t) {
+  t.throws(function () {
     assert.ifError(new Error());
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.ifError(null);
   });
 });
 
-test('.deepEqual() should not mask RangeError from assert', function(t) {
+test('.deepEqual() should not mask RangeError from assert', function (t) {
   function Circular() {
     this.test = this;
   }
@@ -797,11 +806,11 @@ test('.deepEqual() should not mask RangeError from assert', function(t) {
   var a = new Circular();
   var b = new Circular();
 
-  t.throws(function() {
+  t.throws(function () {
     assert.notDeepEqual(a, b);
   });
 
-  t.notThrows(function() {
+  t.notThrows(function () {
     assert.deepEqual(a, b);
   });
 });

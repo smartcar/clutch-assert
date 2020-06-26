@@ -3,7 +3,7 @@
 const test = require('ava');
 const clutch = require('../../index');
 const callSignature = require('call-signature');
-const {ENHANCED, NOT_ENHANCED} = require('../../lib/patterns');
+const { ENHANCED, NOT_ENHANCED } = require('../../lib/patterns');
 
 /**
  * Helper method for getting function name from patterns
@@ -13,16 +13,17 @@ function methodName(signature) {
   return callSignature.parse(signature).callee.member;
 }
 
-test('default api', function(t) {
+test('default api', function (t) {
   const methods = Object.keys(clutch).sort();
-  const allPatterns = ENHANCED.concat(NOT_ENHANCED).map(methodName)
+  const allPatterns = ENHANCED.concat(NOT_ENHANCED)
+    .map(methodName)
     .concat(['default', 'customize']) // add in the default property for modules
     .sort();
 
   t.deepEqual(methods, allPatterns);
 });
 
-test('customize', function(t) {
+test('customize', function (t) {
   const assert = clutch.customize({
     assertion: {
       patterns: [],
@@ -36,7 +37,8 @@ test('customize', function(t) {
     .concat(['customize'])
     .sort();
 
-  const allPatterns = ENHANCED.concat(NOT_ENHANCED).map(methodName)
+  const allPatterns = ENHANCED.concat(NOT_ENHANCED)
+    .map(methodName)
     .concat(['default', 'customize']) // add in the default property for modules
     .sort();
 
