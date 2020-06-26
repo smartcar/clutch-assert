@@ -1,5 +1,5 @@
 'use strict';
 
 module.exports = {
-  extends: 'smartcar',
+  extends: ['@smartcar/eslint-config', '@smartcar/eslint-config/ava'],
 };
