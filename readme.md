@@ -3,6 +3,7 @@
 > "The only assert library that truly comes in clutch"
 
 ## What is this?!
+
 "That's a great question, I'm glad you asked"
 
 This project is essentially a combination of ideas from two other projects
@@ -24,6 +25,7 @@ replace the word assert with ava's assertion mixin variable.
 ## Quick Start
 
 Install clutch-assert
+
 ```
 $ npm install --save clutch-assert
 ```
@@ -32,6 +34,7 @@ Instruct your test runner to require the clutch-assert loader before running tes
 **You will not get enhanced assertion messages if you neglect to require the loader**
 
 Example using [mocha](https://mochajs.org/)
+
 ```
 $(npm bin)/mocha --require clutch-assert/loader path/to/test/mocha_node.js
 ```
@@ -53,11 +56,13 @@ dependencies work power-assert won't work correctly if the variable is named
 something else.
 
 ### Loader Configuration
+
 By default the loader instruments all files under the `test` directory, this can be changed
 by placing a `.clutchrc` in the root of your project which should be a json file with a `directory`
 top-level key.
 
-*Example*
+_Example_
+
 ```json
 {
   "directory": "test/unit"
@@ -65,12 +70,14 @@ top-level key.
 ```
 
 ### Using Other Loaders
+
 The [power-assert loaders](https://github.com/power-assert-js/power-assert#be-sure-to-transform-test-code)
 do not have support for the `.keys` assertion by default. If you wish to use
 that assertion you must import the patterns from clutch assert and configure
 the loader to use those patterns.
 
 Here is an example using `espower-loader`
+
 ```js
 const espower = require('espower-loader');
 const patterns = require('clutch-assert/lib/patterns');
@@ -132,15 +139,15 @@ Assert that `object` contains all of and only the `keys` specified
 
 ### `.throws(fn, expected, [message]])`
 
-Assert that an error is thrown. `fn` must be a function which should throw. The thrown value *must* be an error. It is returned so you can run more assertions against it.
+Assert that an error is thrown. `fn` must be a function which should throw. The thrown value _must_ be an error. It is returned so you can run more assertions against it.
 
 `expected` can be a constructor, in which case the thrown error must be an instance of the constructor. It can be a string, which is compared against the thrown error's message, or a regular expression which is matched against this message. You can also specify a matcher object with one or more of the following properties:
 
-* `instanceOf`: a constructor, the thrown error must be an instance of
-* `is`: the thrown error must be strictly equal to `expected.is`
-* `message`: either a string, which is compared against the thrown error's message, or a regular expression, which is matched against this message
-* `name`: the expected `.name` value of the thrown error
-* `code`: the expected `.code` value of the thrown error
+- `instanceOf`: a constructor, the thrown error must be an instance of
+- `is`: the thrown error must be strictly equal to `expected.is`
+- `message`: either a string, which is compared against the thrown error's message, or a regular expression, which is matched against this message
+- `name`: the expected `.name` value of the thrown error
+- `code`: the expected `.code` value of the thrown error
 
 Example:
 
@@ -162,23 +169,26 @@ test('throws', t => {
 
 Assert that an error is thrown. `thrower` can be an async function which should throw, or a promise that should reject. This assertion must be awaited.
 
-The thrown value *must* be an error. It is returned so you can run more assertions against it.
+The thrown value _must_ be an error. It is returned so you can run more assertions against it.
 
 `expected` can be a constructor, in which case the thrown error must be an instance of the constructor. It can be a string, which is compared against the thrown error's message, or a regular expression which is matched against this message. You can also specify a matcher object with one or more of the following properties:
 
-* `instanceOf`: a constructor, the thrown error must be an instance of
-* `is`: the thrown error must be strictly equal to `expected.is`
-* `message`: either a string, which is compared against the thrown error's message, or a regular expression, which is matched against this message
-* `name`: the expected `.name` value of the thrown error
-* `code`: the expected `.code` value of the thrown error
+- `instanceOf`: a constructor, the thrown error must be an instance of
+- `is`: the thrown error must be strictly equal to `expected.is`
+- `message`: either a string, which is compared against the thrown error's message, or a regular expression, which is matched against this message
+- `name`: the expected `.name` value of the thrown error
+- `code`: the expected `.code` value of the thrown error
 
 Example:
 
 ```js
 test('throws', async t => {
-  await t.throwsAsync(async () => {
-    throw new TypeError('hello there');
-  }, {instanceOf: TypeError, message: 'hello there'});
+  await t.throwsAsync(
+    async () => {
+      throw new TypeError('hello there');
+    },
+    { instanceOf: TypeError, message: 'hello there' },
+  );
 });
 ```
 
@@ -239,7 +249,7 @@ const assert = require('clutch-assert').customize({
 #### options.assertion
 
 Customization options for [empower](https://github.com/power-assert-js/empower) module.
- See [empower API documentation](https://github.com/power-assert-js/empower#api) for details.
+See [empower API documentation](https://github.com/power-assert-js/empower#api) for details.
 Note that some default values are different from `empower`'s
 (`modifyMessageOnRethrow: true` and `saveContextOnRethrow: true`).
 
@@ -295,12 +305,9 @@ const assert = require('clutch-assert').customize({
 
 [npm-url]: https://www.npmjs.com/package/clutch-assert
 [npm-image]: https://img.shields.io/npm/v/clutch-assert.svg?style=flat-square
-
 [ci-url]: https://travis-ci.com/smartcar/clutch-assert
 [ci-image]: https://img.shields.io/travis/com/smartcar/clutch-assert/master.svg?style=flat-square
-
 [coverage-url]: https://codecov.io/gh/smartcar/clutch-assert
 [coverage-image]: https://img.shields.io/codecov/c/github/smartcar/clutch-assert/master.svg?style=flat-square
-
 [gk-url]: https://greenkeeper.io
 [gk-image]: https://badges.greenkeeper.io/smartcar/clutch-assert.svg?style=flat-square

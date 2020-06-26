@@ -6,17 +6,14 @@ const path = require('path');
 const DEFAULT_DIRECTORY = 'test';
 
 function findParent(paths) {
-
   for (const p of paths) {
     if (!p.includes('clutch-assert')) {
       return path.dirname(p);
     }
   }
-
 }
 
 function getDirectory(rc) {
-
   if (!(typeof rc === 'object' && rc.directory)) {
     return DEFAULT_DIRECTORY;
   }
@@ -33,11 +30,11 @@ function getDirectory(rc) {
 }
 
 function checkDirectory(dir) {
-
   dir = path.resolve(dir);
   try {
     fs.accessSync(dir, fs.F_OK);
-  } catch (e) { // eslint-disable-next-line max-len
+  } catch (e) {
+    // eslint-disable-next-line max-len
     e.message = `(clutch-assert/loader) Tried to instrument ${dir} but it does not exist.
     Please specify the correct directory in .clutchrc as follows:
     {
@@ -46,11 +43,10 @@ function checkDirectory(dir) {
     `;
     throw e;
   }
-
 }
 
 function createPattern(dir) {
   return dir + path.sep + '**' + path.sep + '*.js';
 }
 
-module.exports = {getDirectory, checkDirectory, createPattern, findParent};
+module.exports = { getDirectory, checkDirectory, createPattern, findParent };

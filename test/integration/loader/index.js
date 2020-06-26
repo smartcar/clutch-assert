@@ -23,33 +23,35 @@ if (process.env.NYC_CONFIG) {
  * @return {String} the directory in which the file was written
  */
 function writeRC(data) {
-  return new Promise(function(resolve, reject) {
-
-    fs.mkdtemp(os.tmpdir() + path.sep, function(err, dir) {
-      if (err) { return reject(err); }
-      fs.writeFile(path.join(dir, '.clutchrc'), data, function(err) {
-        if (err) { return reject(err); }
+  return new Promise(function (resolve, reject) {
+    fs.mkdtemp(os.tmpdir() + path.sep, function (err, dir) {
+      if (err) {
+        return reject(err);
+      }
+      fs.writeFile(path.join(dir, '.clutchrc'), data, function (err) {
+        if (err) {
+          return reject(err);
+        }
         return resolve(dir);
       });
     });
-
   });
 }
 
-test.before(function() {
+test.before(function () {
   mockery.enable({
     useCleanCache: true,
   });
 });
 
-test.beforeEach(function(t) {
+test.beforeEach(function (t) {
   t.context.stub = sinon.stub();
   mockery.registerMock('espower-loader', t.context.stub);
   mockery.resetCache();
   mockery.registerAllowables(['fs', 'path', '../../loader', '../lib/patterns']);
 });
 
-test.afterEach.always.cb(function(t) {
+test.afterEach.always.cb(function (t) {
   mockery.deregisterAll();
   if (t.context.path) {
     fs.unlink(t.context.path, () => t.end());
@@ -58,12 +60,11 @@ test.afterEach.always.cb(function(t) {
   }
 });
 
-test.after.always(function() {
+test.after.always(function () {
   mockery.disable();
 });
 
-test.serial('no rc file', function(t) {
-
+test.serial('no rc file', function (t) {
   const mock = Object.assign({}, helpers, {
     findParent: () => __dirname,
   });
@@ -81,12 +82,10 @@ test.serial('no rc file', function(t) {
   t.is(arg.pattern, 'test/**/*.js');
   t.is(arg.cwd, process.cwd());
   t.is(arg.espowerOptions.patterns, 'MOCK');
-
 });
 
-test.serial('valid rc file', async function(t) {
-
-  const path = t.context.path = await writeRC('{"directory": "mock"}');
+test.serial('valid rc file', async function (t) {
+  const path = (t.context.path = await writeRC('{"directory": "mock"}'));
 
   const mock = Object.assign({}, helpers, {
     findParent: () => path,
@@ -102,12 +101,10 @@ test.serial('valid rc file', async function(t) {
   const arg = t.context.stub.args[0][0];
 
   t.is(arg.pattern, 'mock/**/*.js');
-
 });
 
-test.serial('invalid rc file', async function(t) {
-
-  const path = t.context.path = await writeRC('this is not JSON');
+test.serial('invalid rc file', async function (t) {
+  const path = (t.context.path = await writeRC('this is not JSON'));
 
   mockery.registerMock('./helpers', {
     findParent: () => path,
@@ -119,9 +116,10 @@ test.serial('invalid rc file', async function(t) {
   });
 });
 
-test.serial('integration', async function(t) {
-
-  const path = t.context.path = await writeRC('{"directory": "test/fixtures"}');
+test.serial('integration', async function (t) {
+  const path = (t.context.path = await writeRC(
+    '{"directory": "test/fixtures"}',
+  ));
 
   mockery.warnOnUnregistered(false);
   mockery.deregisterMock('espower-loader');
@@ -134,11 +132,9 @@ test.serial('integration', async function(t) {
 
   require('../../../loader');
 
-
-  const err = t.throws(function() {
+  const err = t.throws(function () {
     require('../../fixtures/to_be_instrumented');
   });
 
   t.regex(err.message, /^Cannot find module 'power-assert'/);
-
 });
