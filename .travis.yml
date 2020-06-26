@@ -1,23 +1,23 @@
-language:
-  - node_js
+language: node_js
 
 node_js:
-  - "12"
-  - "10"
+  - '12'
+  - '10'
 
 cache:
   directories:
-    - "$HOME/.npm"
-    - ".eslintcache"
+    - '$HOME/.npm'
+    - '.eslintcache'
 
 if: tag IS blank # do not build tags
 
 notifications:
   slack:
-    secure: "hBzS5QRVvZBjWfXFXzexJq2SRdhrN+DQyQJeRrZTgpBCCthMIPQD0VkMTJBAH9IT/ZyRSEKtQO8PwEyiEKu5v+zD1NBSYnQsm5bD70SJJL0kJHQ6h+7yXcxmrec8Q9Giyvd+fDD1zRZK0ORP/bbV00/pzdo21bvkKMZeuemrNxc3f/PeA0B1Hg5m3KkE1LfpRhERv0EFhPc7Pt2mcNVr715wvDEvB17jcsRwfr2quYnE85gJRhWoy30XPkjeiAJVZowKE6Q6GVJXivbukoFzYTpVUaLy5YG7M4WZ962Yoobvph8ro8OkMNp4T7m2snEK/q1M8M6/9xR7M+P70IO62Nfxi/Lj5pXRBEiagQIkH97hLLaT4CCjXip0j8udDx8UzIanOjfiNIfTAfjfTBNevVNfoHYuh4vC7zDsu0G4OV2AoPyLe2lb85c1qeh6tynfGN56nmz5Zuntf8xVK6EwSswzKksm7LaJRwtxkuJzBrR1Qp2kY9wEq7qeMQ2boA8B68c0fe5YQ+83gX04+U5uDdVKxgWAIqy9vaERrWuGtfK83/ox1wdIxDCnevsIkGwmsX7GYuAqpOuA0/UZZDat7XkHiqipUglfSVTm1TImQKhyWyTlbx6aIjzzpO8vkkYGptx9iBxMSYGmjig23rPC4BaFnd/r34tcBuvU5X/WpXk="
+    secure: 'hBzS5QRVvZBjWfXFXzexJq2SRdhrN+DQyQJeRrZTgpBCCthMIPQD0VkMTJBAH9IT/ZyRSEKtQO8PwEyiEKu5v+zD1NBSYnQsm5bD70SJJL0kJHQ6h+7yXcxmrec8Q9Giyvd+fDD1zRZK0ORP/bbV00/pzdo21bvkKMZeuemrNxc3f/PeA0B1Hg5m3KkE1LfpRhERv0EFhPc7Pt2mcNVr715wvDEvB17jcsRwfr2quYnE85gJRhWoy30XPkjeiAJVZowKE6Q6GVJXivbukoFzYTpVUaLy5YG7M4WZ962Yoobvph8ro8OkMNp4T7m2snEK/q1M8M6/9xR7M+P70IO62Nfxi/Lj5pXRBEiagQIkH97hLLaT4CCjXip0j8udDx8UzIanOjfiNIfTAfjfTBNevVNfoHYuh4vC7zDsu0G4OV2AoPyLe2lb85c1qeh6tynfGN56nmz5Zuntf8xVK6EwSswzKksm7LaJRwtxkuJzBrR1Qp2kY9wEq7qeMQ2boA8B68c0fe5YQ+83gX04+U5uDdVKxgWAIqy9vaERrWuGtfK83/ox1wdIxDCnevsIkGwmsX7GYuAqpOuA0/UZZDat7XkHiqipUglfSVTm1TImQKhyWyTlbx6aIjzzpO8vkkYGptx9iBxMSYGmjig23rPC4BaFnd/r34tcBuvU5X/WpXk='
 
 install:
-  - npm ci
+  - npm ci --ignore-scripts
+  - env -i PATH=$PATH npm rebuild
 
 script:
   - npm test
@@ -26,8 +26,10 @@ script:
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-jobs:
-  include:
-    - stage: publish
-      node_js: 10
-      script: semantic-release
+deploy:
+  provider: script
+  skip_cleanup: true
+  script: semantic-release
+  on:
+    node_js: '10'
+    all_branches: true
