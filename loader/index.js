@@ -2,13 +2,16 @@
 
 const fs = require('fs');
 const path = require('path');
-const helpers = require('./helpers');
+
 const espower = require('espower-loader');
+
 const patterns = require('../lib/patterns');
+
+const helpers = require('./helpers');
 
 const parent = helpers.findParent(module.paths);
 
-var rc;
+let rc;
 try {
   rc = JSON.parse(fs.readFileSync(parent + path.sep + '.clutchrc'));
 } catch (e) {

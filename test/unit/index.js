@@ -1,13 +1,15 @@
 'use strict';
 
 const test = require('ava');
-const clutch = require('../../index');
 const callSignature = require('call-signature');
+
+const clutch = require('../..');
 const { ENHANCED, NOT_ENHANCED } = require('../../lib/patterns');
 
 /**
  * Helper method for getting function name from patterns
- * @param {String} signature - function signature to inspect
+ *
+ * @param {string} signature - function signature to inspect
  */
 function methodName(signature) {
   return callSignature.parse(signature).callee.member;

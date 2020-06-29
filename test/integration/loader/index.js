@@ -1,16 +1,16 @@
 'use strict';
 
-/* eslint-disable global-require */
-
 const os = require('os');
 const fs = require('fs');
-const test = require('ava');
 const path = require('path');
+
+const test = require('ava');
 const sinon = require('sinon');
 const mockery = require('mockery');
+
 const helpers = require('../../../loader/helpers');
 
-// eslint-disable-next-line no-process-env
+// eslint-disable-next-line node/no-process-env
 if (process.env.NYC_CONFIG) {
   // silence mockery when running coverage
   mockery.warnOnUnregistered(false);
@@ -19,8 +19,8 @@ if (process.env.NYC_CONFIG) {
 /**
  * Creates a temporary directory and writes a .clutchrc file in that directory
  *
- * @param {String} data - the data to be written to the rc file
- * @return {String} the directory in which the file was written
+ * @param {string} data - the data to be written to the rc file
+ * @returns {string} the directory in which the file was written
  */
 function writeRC(data) {
   return new Promise(function (resolve, reject) {
@@ -65,9 +65,7 @@ test.after.always(function () {
 });
 
 test.serial('no rc file', function (t) {
-  const mock = Object.assign({}, helpers, {
-    findParent: () => __dirname,
-  });
+  const mock = { ...helpers, findParent: () => __dirname };
 
   mockery.registerMock('./helpers', mock);
   mockery.registerMock('../lib/patterns', {
@@ -87,10 +85,11 @@ test.serial('no rc file', function (t) {
 test.serial('valid rc file', async function (t) {
   const path = (t.context.path = await writeRC('{"directory": "mock"}'));
 
-  const mock = Object.assign({}, helpers, {
+  const mock = {
+    ...helpers,
     findParent: () => path,
     checkDirectory: () => true,
-  });
+  };
 
   mockery.registerMock('./helpers', mock);
 
@@ -112,7 +111,7 @@ test.serial('invalid rc file', async function (t) {
 
   t.throws(() => require('../../../loader'), {
     instanceOf: SyntaxError,
-    message: /^Unexpected token \w+( in JSON at position \d+)?$/,
+    message: /^Unexpected token \w+( in JSON at position \d+)?$/u,
   });
 });
 
@@ -124,9 +123,7 @@ test.serial('integration', async function (t) {
   mockery.warnOnUnregistered(false);
   mockery.deregisterMock('espower-loader');
 
-  const mock = Object.assign({}, helpers, {
-    findParent: () => path,
-  });
+  const mock = { ...helpers, findParent: () => path };
 
   mockery.registerMock('./helpers', mock);
 
@@ -136,5 +133,5 @@ test.serial('integration', async function (t) {
     require('../../fixtures/to_be_instrumented');
   });
 
-  t.regex(err.message, /^Cannot find module 'power-assert'/);
+  t.regex(err.message, /^Cannot find module 'power-assert'/u);
 });

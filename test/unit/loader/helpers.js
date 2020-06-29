@@ -1,7 +1,9 @@
 'use strict';
 
-const test = require('ava');
 const { sep } = require('path');
+
+const test = require('ava');
+
 const helpers = require('../../../loader/helpers');
 
 test('findPackageDir', function (t) {

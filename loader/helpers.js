@@ -19,11 +19,11 @@ function getDirectory(rc) {
   }
 
   const dir = rc.directory;
-  const last = dir.substring(dir.length - 1);
+  const last = dir.slice(Math.max(0, dir.length - 1));
 
   // strip trailing slashes
   if (last === '/' || last === '\\') {
-    return dir.substring(0, dir.length - 1);
+    return dir.slice(0, Math.max(0, dir.length - 1));
   }
 
   return dir;

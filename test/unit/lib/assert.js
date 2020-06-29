@@ -1,6 +1,7 @@
 'use strict';
 
 const test = require('ava');
+
 const assert = require('../../../lib/assert');
 
 test('.pass()', function (t) {
@@ -156,10 +157,10 @@ test('.deepEqual()', function (t) {
   });
 
   t.throws(function () {
-    var fnA = function (a) {
+    const fnA = function (a) {
       return a;
     };
-    var fnB = function (a) {
+    const fnB = function (a) {
       return a;
     };
 
@@ -167,12 +168,12 @@ test('.deepEqual()', function (t) {
   });
 
   t.notThrows(function () {
-    var x1 = { z: 4 };
-    var y1 = { x: x1 };
+    const x1 = { z: 4 };
+    const y1 = { x: x1 };
     x1.y = y1;
 
-    var x2 = { z: 4 };
-    var y2 = { x: x2 };
+    const x2 = { z: 4 };
+    const y2 = { x: x2 };
     x2.y = y2;
 
     assert.deepEqual(x1, x2);
@@ -183,8 +184,8 @@ test('.deepEqual()', function (t) {
       this.a = a;
     }
 
-    var x = new Foo(1);
-    var y = new Foo(1);
+    const x = new Foo(1);
+    const y = new Foo(1);
 
     assert.deepEqual(x, y);
   });
@@ -198,8 +199,8 @@ test('.deepEqual()', function (t) {
       this.a = a;
     }
 
-    var x = new Foo(1);
-    var y = new Bar(1);
+    const x = new Foo(1);
+    const y = new Bar(1);
 
     assert.deepEqual(x, y);
   });
@@ -338,7 +339,7 @@ test('.deepEqual()', function (t) {
   t.regex(msg, /'c'\s*].*?'d'\s*]/);
 
   err = t.throws(function () {
-    var circular = ['a', 'b'];
+    const circular = ['a', 'b'];
     circular.push(circular);
     assert.deepEqual([circular, 'c'], [circular, 'd']);
   });
@@ -803,8 +804,8 @@ test('.deepEqual() should not mask RangeError from assert', function (t) {
     this.test = this;
   }
 
-  var a = new Circular();
-  var b = new Circular();
+  const a = new Circular();
+  const b = new Circular();
 
   t.throws(function () {
     assert.notDeepEqual(a, b);
