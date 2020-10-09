@@ -183,7 +183,7 @@ test('.deepEqual()', function(t) {
     assert.deepEqual(x, y);
   });
 
-  t.notThrows(function() {
+  t.throws(function() {
     function Foo(a) {
       this.a = a;
     }
@@ -212,6 +212,94 @@ test('.deepEqual()', function(t) {
       b: 'b',
       a: 'a',
     });
+  });
+
+  t.throws(function() {
+    assert.deepEqual({a: 1}, {a: 1, b: undefined});
+  });
+
+  t.throws(function() {
+    assert.deepEqual(new Date('1972-08-01'), null);
+  });
+
+  t.throws(function() {
+    assert.deepEqual(new Date('1972-08-01'), undefined);
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(new Date('1972-08-01'), new Date('1972-08-01'));
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(
+      {x: new Date('1972-08-01')},
+      {x: new Date('1972-08-01')},
+    );
+  });
+
+  t.throws(function() {
+    assert.deepEqual(
+      function a() { /* empty */ },
+      function a() { /* empty */ },
+    );
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(undefined, undefined);
+    assert.deepEqual({x: undefined}, {x: undefined});
+    assert.deepEqual({x: [undefined]}, {x: [undefined]});
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(null, null);
+    assert.deepEqual({x: null}, {x: null});
+    assert.deepEqual({x: [null]}, {x: [null]});
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(0, 0);
+    assert.deepEqual(1, 1);
+    assert.deepEqual(3.14, 3.14);
+  });
+
+  t.throws(function() {
+    assert.deepEqual(0, 1);
+  });
+
+  t.throws(function() {
+    assert.deepEqual(1, -1);
+  });
+
+  t.throws(function() {
+    assert.deepEqual(3.14, 2.72);
+  });
+
+  t.throws(function() {
+    assert.deepEqual({0: 'a', 1: 'b'}, ['a', 'b']);
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(
+      [
+        {foo: {z: 100, y: 200, x: 300}},
+        'bar',
+        11,
+        {baz: {d: 4, a: 1, b: 2, c: 3}},
+      ],
+      [
+        {foo: {x: 300, y: 200, z: 100}},
+        'bar',
+        11,
+        {baz: {c: 3, b: 2, a: 1, d: 4}},
+      ],
+    );
+  });
+
+  t.notThrows(function() {
+    assert.deepEqual(
+      {x: {a: 1, b: 2}, y: {c: 3, d: 4}},
+      {y: {d: 4, c: 3}, x: {b: 2, a: 1}},
+    );
   });
 
   // Regression test end here

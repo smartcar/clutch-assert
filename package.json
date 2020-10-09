@@ -45,7 +45,7 @@
     "espower-loader": "^1.2.0",
     "is-error": "^2.2.1",
     "is-promise": "^4.0.0",
-    "not-so-shallow": "^0.1.4",
+    "lodash.isequal": "^4.5.0",
     "power-assert-formatter": "^1.4.1",
     "trim-off-newlines": "^1.0.1"
   },
