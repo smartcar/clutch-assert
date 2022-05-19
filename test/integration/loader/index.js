@@ -3,7 +3,7 @@
 /* eslint-disable global-require */
 
 const os = require('os');
-const fs = require('fs');
+const fs = require('fs').promises;
 const test = require('ava');
 const path = require('path');
 const sinon = require('sinon');
@@ -22,18 +22,10 @@ if (process.env.NYC_CONFIG) {
  * @param {String} data - the data to be written to the rc file
  * @return {String} the directory in which the file was written
  */
-function writeRC(data) {
-  return new Promise(function(resolve, reject) {
-
-    fs.mkdtemp(os.tmpdir() + path.sep, function(err, dir) {
-      if (err) { return reject(err); }
-      fs.writeFile(path.join(dir, '.clutchrc'), data, function(err) {
-        if (err) { return reject(err); }
-        return resolve(dir);
-      });
-    });
-
-  });
+async function writeRC(data) {
+  const dir = await fs.mkdtemp(os.tmpdir() + path.sep);
+  await fs.writeFile(path.join(dir, '.clutchrc'), data);
+  return dir;
 }
 
 test.before(function() {
@@ -49,12 +41,11 @@ test.beforeEach(function(t) {
   mockery.registerAllowables(['fs', 'path', '../../loader', '../lib/patterns']);
 });
 
-test.afterEach.always.cb(function(t) {
+test.afterEach.always(async function(t) {
   mockery.deregisterAll();
   if (t.context.path) {
-    fs.unlink(t.context.path, () => t.end());
-  } else {
-    t.end();
+    await fs.unlink(path.join(t.context.path, '.clutchrc'));
+    await fs.rmdir(t.context.path);
   }
 });
 
