@@ -1,0 +1,31 @@
+- pipeline: 'CI'
+  on: 'EVENT'
+  events:
+    - type: 'PUSH'
+      refs:
+        - 'refs/heads/*'
+  priority: 'NORMAL'
+  fail_on_prepare_env_warning: true
+  variables:
+    - key: 'CODECOV_TOKEN'
+      value: 'secure!98lZjvc3CKurbTtXVlQH16aV+fYmfEppicIF3doKpeL2eYhd9snLO+0n+srjBlL+.EciZ7pJQwo9GJwIabNI6dw=='
+      type: 'VAR'
+      encrypted: true
+  actions:
+    - action: 'Build dependencies'
+      type: 'BUILD'
+      region: 'us-west-2'
+      docker_image_name: 'smartcar/base'
+      docker_image_tag: '14'
+      execute_commands:
+        - 'npm ci --ignore-scripts'
+        - 'npm rebuild'
+        - 'npm run cover'
+        - 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
+        - 'chmod +x codecov'
+        - './codecov -t ${CODECOV_TOKEN} -R .nyc_output'
+      volume_mappings:
+        - '/:/buddy/clutch-assert'
+      cache_base_image: true
+      shell: 'BASH'
+      integration_hash: '3DmJqAMrlNbWp9nJdyg5Kx2n6z'
