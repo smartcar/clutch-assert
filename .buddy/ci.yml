@@ -1,9 +1,16 @@
 - pipeline: 'CI'
-  on: 'CLICK'
-  refs:
-    - 'refs/heads/*'
+  on: 'EVENT'
+  events:
+    - type: 'PUSH'
+      refs:
+        - 'refs/heads/*'
   priority: 'NORMAL'
   fail_on_prepare_env_warning: true
+  variables:
+    - key: 'CODECOV_TOKEN'
+      value: 'secure!98lZjvc3CKurbTtXVlQH16aV+fYmfEppicIF3doKpeL2eYhd9snLO+0n+srjBlL+.EciZ7pJQwo9GJwIabNI6dw=='
+      type: 'VAR'
+      encrypted: true
   actions:
     - action: 'Build dependencies'
       type: 'BUILD'

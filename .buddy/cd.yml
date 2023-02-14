@@ -1,8 +1,10 @@
 - pipeline: 'CD'
-  on: 'CLICK'
-  refs:
-    - 'refs/heads/*'
-  priority: 'NORMAL'
+  on: 'EVENT'
+  events:
+    - type: 'PUSH'
+      refs:
+        - ':default'
+  priority: 'HIGH'
   fail_on_prepare_env_warning: true
   variables:
     - key: 'GH_TOKEN'
@@ -10,7 +12,7 @@
       type: 'VAR'
       encrypted: true
     - key: 'NPM_TOKEN'
-      value: 'secure!hlrHPtjo86FrkValxTh7PO/CQtl/7k7pmErjcq+t7V0=.RwqkXF3OVdnoW/rURKLx9w=='
+      value: 'secure!JSjVxtqJWZ5+mNfIIT3aPiqpo0/xTyOoeSI6MFyViZY=.xQwDwzONGDKV1UY65gvuPw=='
       type: 'VAR'
       encrypted: true
   actions:
