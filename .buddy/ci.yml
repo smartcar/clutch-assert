@@ -21,7 +21,9 @@
         - 'npm ci --ignore-scripts'
         - 'npm rebuild'
         - 'npm run cover'
-        - 'bash <(curl -s https://codecov.io/bash)'
+        - 'curl -Os https://uploader.codecov.io/latest/linux/codecov'
+        - 'chmod +x codecov'
+        - './codecov -t ${CODECOV_TOKEN} -R .nyc_output'
       volume_mappings:
         - '/:/buddy/clutch-assert'
       cache_base_image: true
